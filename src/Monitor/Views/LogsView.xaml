@@ -1,0 +1,72 @@
+﻿<UserControl
+    x:Class="MainApplication.Views.LogsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid>
+        <!--  DataGrid  -->
+        <DataGrid
+            x:Name="DataGrid"
+            AutoGenerateColumns="False"
+            BorderThickness="0"
+            CanUserAddRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="True"
+            GridLinesVisibility="None"
+            HeadersVisibility="Column"
+            IsTabStop="False"
+            ItemsSource="{Binding Items}"
+            PreparingCellForEdit="DataGrid_PreparingCellForEdit"
+            SelectionMode="Single">
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource {x:Type DataGridRow}}" TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsError}" Value="True">
+                            <Setter Property="Foreground" Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <!--  Czas  -->
+                <DataGridTextColumn
+                    Binding="{Binding Timestamp, StringFormat='yyyy-MM-dd HH:mm:ss'}"
+                    ElementStyle="{StaticResource DataGridTextBlock}"
+                    Header="Czas"
+                    IsReadOnly="True" />
+                <!--  Zdarzenie  -->
+                <DataGridTextColumn Binding="{Binding Event}" Header="Zdarzenie">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style BasedOn="{StaticResource DataGridTextBlock}" TargetType="TextBlock" />
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+                            <Setter Property="IsReadOnly" Value="True" />
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Padding" Value="0,-3,0,-2" />
+                            <Setter Property="Margin" Value="0,0,0,-4" />
+                            <Setter Property="Border.CornerRadius" Value="0" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Event, Converter={StaticResource EmptyStringConverter}}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <!--  Pusta kolumna - Wypelniacz  -->
+                <DataGridTextColumn
+                    Width="*"
+                    HeaderStyle="{StaticResource EmptyColumnHeaderStyle}"
+                    IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,24 @@
+﻿<Application
+    x:Class="MainApplication.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    StartupUri="Windows/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Style/Colors.xaml" />
+                <ResourceDictionary Source="./Style/DataConverters.xaml" />
+                <ResourceDictionary Source="./Style/Button.xaml" />
+                <ResourceDictionary Source="./Style/CheckBox.xaml" />
+                <ResourceDictionary Source="./Style/DataGrid.xaml" />
+                <ResourceDictionary Source="./Style/ProgressBar.xaml" />
+                <ResourceDictionary Source="./Style/ScrollBar.xaml" />
+                <ResourceDictionary Source="./Style/Separator.xaml" />
+                <ResourceDictionary Source="./Style/TextBlock.xaml" />
+                <ResourceDictionary Source="./Style/TextBox.xaml" />
+                <ResourceDictionary Source="./Style/Window.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

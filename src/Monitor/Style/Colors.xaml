@@ -1,0 +1,108 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="TestBrush" Color="#FF3C7095" />
+
+    <!--  Background  -->
+    <Color x:Key="ThemeMainBackgroundColor">#FF4A8BBB</Color>
+    <Color x:Key="ButtonBackgroundColor">#FF4A8BBB</Color>
+    <Color x:Key="DataGridRowSelectedBackgroundColor">#FF74A8CF</Color>
+    <Color x:Key="DataGridRowUnfocusedSelectedBackgroundColor">#FF85ADCB</Color>
+
+    <!--  MouseOver  -->
+    <Color x:Key="ThemeMainMouseOverColor">#FF5E98C3</Color>
+    <Color x:Key="ButtonMouseOverColor">#FF5E98C3</Color>
+    <Color x:Key="ButtonLightMouseOverColor">#FFE8E8E8</Color>
+    <Color x:Key="DataGridHeaderMouseOverColor">#FFE8E8E8</Color>
+    <Color x:Key="DataGridRowMouseOverColor">#FFE4E4E4</Color>
+    <Color x:Key="DataGridRowSelectedMouseOverColor">#FF80B9E4</Color>
+
+    <!--  Disabled  -->
+    <Color x:Key="ButtonDisabledBackgroundColor">#FFE8E8E8</Color>
+
+
+    <!--  Pressed  -->
+    <Color x:Key="ButtonPressedColor">#FF437CA8</Color>
+    <Color x:Key="ButtonLightPressedColor">#FFCFCFCF</Color>
+
+
+    <!--  Foreground  -->
+    <Color x:Key="ButtonForegroundColor">#FFDAE7F5</Color>
+    <Color x:Key="DataGridHeaderIconForegroundColor">#FFA0A0A0</Color>
+    <Color x:Key="TextBlockForegroundColor">#FFA0A0A0</Color>
+
+    <!--  Border  -->
+    <Color x:Key="ThemeMainBorderColor">#FF7F7F7F</Color>
+    <Color x:Key="ThemeLightBorderColor">#FFCFCFCF</Color>
+    <Color x:Key="ThemeMediumBorderColor">#FF606060</Color>
+    <Color x:Key="FocusedBorderColor">#FF003344</Color>
+
+    <SolidColorBrush x:Key="ThemeMainBackgroundBrush" Color="{StaticResource ThemeMainBackgroundColor}" />
+    <SolidColorBrush x:Key="ThemeMainMouseOverBrush" Color="{StaticResource ThemeMainMouseOverColor}" />
+
+    <SolidColorBrush x:Key="ThemeMainBorderBrush" Color="{StaticResource ThemeMainBorderColor}" />
+    <SolidColorBrush x:Key="ThemeLightBorderBrush" Color="{StaticResource ThemeLightBorderColor}" />
+    <SolidColorBrush x:Key="ThemeMediumBorderBrush" Color="{StaticResource ThemeMediumBorderColor}" />
+    <SolidColorBrush x:Key="ThemeSeparatorBrush" Color="#FF437CA8" />
+
+    <!--  Button  -->
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="{StaticResource ButtonForegroundColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverBrush" Color="{StaticResource ButtonMouseOverColor}" />
+    <SolidColorBrush x:Key="ButtonLightMouseOverBrush" Color="{StaticResource ButtonLightMouseOverColor}" />
+    <SolidColorBrush x:Key="ButtonPressedBrush" Color="{StaticResource ButtonPressedColor}" />
+
+    <SolidColorBrush x:Key="ButtonLightPressedBrush" Color="{StaticResource ButtonLightPressedColor}" />
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="{StaticResource ButtonDisabledBackgroundColor}" />
+    <SolidColorBrush x:Key="ButtonDisabledContentBrush" Color="#FFB0B0B0" />
+
+    <SolidColorBrush x:Key="FocusedBorderBrush" Color="{StaticResource FocusedBorderColor}" />
+
+    <!--  DataGrid  -->
+    <SolidColorBrush x:Key="DataGridHeaderIconForegroundBrush" Color="{StaticResource DataGridHeaderIconForegroundColor}" />
+
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundBrush" Color="White" />
+    <SolidColorBrush x:Key="DataGridHeaderForegroundBrush" Color="#FF808080" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrush" Color="#FFBFBFBF" />
+    <SolidColorBrush x:Key="DataGridDisabledHeaderBorderBrush" Color="#FF8A8A8A" />
+    <SolidColorBrush x:Key="DataGridLightForegroundBrush" Color="#FFA0A0A0" />
+
+
+    <Color x:Key="DataGridHeaderPressedColor">#FFA0A0A0</Color>
+    <Color x:Key="DataGridBackgroundColor">#FFD0D0D0</Color>
+    <SolidColorBrush x:Key="DataGridBackgroundBrush" Color="{StaticResource DataGridBackgroundColor}" />
+    <Color x:Key="DataGridAlternatingRowBackgroundColor">#FFE5E5E5</Color>
+    <SolidColorBrush x:Key="DataGridAlternatingRowBackgroundBrush" Color="{StaticResource DataGridAlternatingRowBackgroundColor}" />
+    <SolidColorBrush x:Key="DataGridForegroundBrush" Color="Black" />
+    <SolidColorBrush x:Key="DataGridBorderBrush" Color="#FF606060" />
+    <SolidColorBrush x:Key="DataGridGridlinesBrush" Color="#FFB0B0B0" />
+    <SolidColorBrush x:Key="DataGridCellForeground" Color="#FF464646" />
+    <Color x:Key="DataGridMouseOverBackgroundColor">#FFD8D8C8</Color>
+    <SolidColorBrush x:Key="DataGridMouseOverBackgroundBrush" Color="{StaticResource DataGridMouseOverBackgroundColor}" />
+
+    <SolidColorBrush x:Key="DataGridSelectedBackgroundBrush" Color="{StaticResource DataGridSelectedBackgroundColor}" />
+    <Color x:Key="DataGridMouseOverSelectedBackgroundColor">#FFB4C8DC</Color>
+
+    <Color x:Key="DataGridMouseOverUnfocusedSelectedBackgroundColor">##FFC8DCF0</Color>
+    <SolidColorBrush x:Key="DataGridGroupBackgroundBrush" Color="#FFD6D6D6" />
+    <SolidColorBrush x:Key="DataGridGroupForegroundBrush" Color="#FF464646" />
+    <SolidColorBrush x:Key="DataGridGroupForegroundBrush1" Color="#FF2D75CB" />
+    <Color x:Key="DataGridEditingBackgroundColor">#FF69B9B9</Color>
+    <Color x:Key="DataGridSelectedBackgroundColor1">#FFC8D7E1</Color>
+
+    <SolidColorBrush x:Key="ScrollbarButtonBrush" Color="#FFBFBFBF" />
+
+    <SolidColorBrush x:Key="TextBlockForegroundBrush" Color="{StaticResource TextBlockForegroundColor}" />
+    <SolidColorBrush x:Key="TextBoxDisabledForegroundBrush" Color="DarkGray" />
+    <SolidColorBrush x:Key="TextBoxDisabledBackgroundBrush" Color="#FFF5F5F5" />
+
+    <SolidColorBrush x:Key="BorderBrush1" Color="#FFD8D8D8" />
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="White" />
+    <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="#FFF8F8F8" />
+
+    <!--  Override selection colors  -->
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">#FF00AAAA</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}">#FF00AAAA</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}">White</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}">White</SolidColorBrush>
+
+</ResourceDictionary>

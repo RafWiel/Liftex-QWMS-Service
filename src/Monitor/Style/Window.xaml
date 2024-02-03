@@ -1,0 +1,330 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gt="clr-namespace:gTools.WPF;assembly=gtls2"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Color x:Key="ThemeMainBorderColor">#FF7F7F7F</Color>
+    <SolidColorBrush x:Key="ThemeMainBorderBrush" Color="{StaticResource ThemeMainBorderColor}" />
+
+    <Color x:Key="ButtonLightMouseOverColor">#FFE5E5E5</Color>
+    <SolidColorBrush x:Key="ButtonLightMouseOverBrush" Color="{StaticResource ButtonLightMouseOverColor}" />
+
+    <sys:Double x:Key="TitleBarHeight">30.0</sys:Double>
+    <Visibility x:Key="TitleBarVisibility">Visible</Visibility>
+
+    <!--  Window Close Button  -->
+    <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Rectangle
+                            x:Name="BackgroundRectangle"
+                            Fill="#FFE03A3A"
+                            Opacity="0" />
+                        <Path
+                            x:Name="IconPath"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M0,0 L10,10 M0,10 L10,0"
+                            Stroke="Black"
+                            StrokeThickness="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="IconPath"
+                                            Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)"
+                                            To="#FFE6E6E6"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.1" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="IconPath"
+                                            Storyboard.TargetProperty="(Path.Stroke).(SolidColorBrush.Color)"
+                                            To="Black"
+                                            Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFD42A2A" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Window Maximize Button  -->
+    <Style x:Key="MaximizeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Rectangle
+                            x:Name="BackgroundRectangle"
+                            Fill="{StaticResource ButtonLightMouseOverBrush}"
+                            Opacity="0" />
+                        <Rectangle
+                            x:Name="NormalIconRect"
+                            Width="10"
+                            Height="10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stroke="Black"
+                            Visibility="Visible" />
+                        <Rectangle
+                            x:Name="MaximizedIconRect"
+                            Width="9"
+                            Height="9"
+                            Margin="-2,2,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stroke="Black"
+                            Visibility="Hidden" />
+                        <Path
+                            x:Name="MaximizedIconPath"
+                            Margin="0,-2,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M3.5,3 L3.5,0 M3,0.5 L12,0.5 M11.5,0 L11.5,9 M12,8.5 L9,8.5"
+                            Stroke="Black"
+                            StrokeThickness="1"
+                            Visibility="Hidden" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="NormalIconRect" Property="Stroke" Value="Black" />
+                            <Setter TargetName="MaximizedIconRect" Property="Stroke" Value="Black" />
+                            <Setter TargetName="MaximizedIconPath" Property="Stroke" Value="Black" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BackgroundRectangle" Property="Fill" Value="{DynamicResource ButtonLightPressedBrush}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                            <Setter TargetName="NormalIconRect" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="MaximizedIconRect" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="MaximizedIconPath" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="NormalIconRect" Property="Stroke" Value="#FF606060" />
+                            <Setter TargetName="MaximizedIconRect" Property="Stroke" Value="#FF606060" />
+                            <Setter TargetName="MaximizedIconPath" Property="Stroke" Value="#FF606060" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="NoResize">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Window Minimize Button  -->
+    <Style x:Key="MinimizeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Rectangle
+                            x:Name="BackgroundRectangle"
+                            Fill="{StaticResource ButtonLightMouseOverBrush}"
+                            Opacity="0" />
+                        <Path
+                            x:Name="IconPath"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M0,0.5 L10,0.5"
+                            SnapsToDevicePixels="True"
+                            Stroke="Black"
+                            StrokeThickness="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="IconPath" Property="Stroke" Value="Black" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BackgroundRectangle"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BackgroundRectangle" Property="Fill" Value="{DynamicResource ButtonLightPressedBrush}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="NoResize">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Window  -->
+    <Style TargetType="{x:Type gt:gWindowBase}">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="{StaticResource TitleBarHeight}"
+                    CornerRadius="0"
+                    GlassFrameThickness="0"
+                    NonClientFrameEdges="None"
+                    ResizeBorderThickness="4"
+                    UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border BorderBrush="{StaticResource ThemeMainBorderBrush}">
+                        <!--  Ramka 6px WindowMaximized  -->
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="Maximized">
+                                        <Setter Property="BorderThickness" Value="6" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border
+                                x:Name="TitleBar"
+                                Grid.Row="0"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="0"
+                                SnapsToDevicePixels="True"
+                                Visibility="{DynamicResource TitleBarVisibility}">
+                                <DockPanel Height="{StaticResource TitleBarHeight}" Background="Transparent">
+                                    <Button
+                                        x:Name="WindowCloseButton"
+                                        Width="40"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource CloseButtonStyle}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    <Button
+                                        x:Name="WindowMaximizeButton"
+                                        Width="40"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource MaximizeButtonStyle}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    <Button
+                                        x:Name="WindowMinimizeButton"
+                                        Width="40"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource MinimizeButtonStyle}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    <TextBlock
+                                        x:Name="Title"
+                                        Margin="10,0"
+                                        VerticalAlignment="Center"
+                                        DockPanel.Dock="Left"
+                                        FontFamily="Segoe UI"
+                                        FontSize="12"
+                                        Foreground="Black"
+                                        Text="{TemplateBinding Title}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </DockPanel>
+                            </Border>
+                            <AdornerDecorator
+                                x:Name="AdornerDecorator"
+                                Grid.Row="1"
+                                Panel.ZIndex="1">
+                                <ContentPresenter />
+                            </AdornerDecorator>
+                            <Border
+                                x:Name="DisabledOverlay"
+                                Grid.RowSpan="2"
+                                Panel.ZIndex="999"
+                                Background="#FFF4F4F4"
+                                Opacity="0.5"
+                                Visibility="Hidden" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="gt:gTitleBar.ViewOverlay" Value="True">
+                            <Setter TargetName="AdornerDecorator" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="AdornerDecorator" Property="Grid.RowSpan" Value="2" />
+                            <Setter TargetName="Title" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="gt:gWindow.IsDisabledOverlay" Value="True">
+                            <Setter TargetName="DisabledOverlay" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

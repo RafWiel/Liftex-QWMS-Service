@@ -1,0 +1,263 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gt="clr-namespace:gTools.WPF;assembly=gtls2"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--<Visibility x:Key="DesignModeVisibility">Visible</Visibility>-->
+
+    <!--  Button  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="20,5" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="Chrome"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="2"
+                        SnapsToDevicePixels="true">
+                        <ContentPresenter
+                            Name="Presenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonMouseOverColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonMouseOverColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Presenter"
+                                            Storyboard.TargetProperty="(TextBlock.Foreground).Color"
+                                            To="White"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonPressedColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonPressedColor}"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonDisabledBackgroundColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonDisabledBackgroundColor}"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Presenter"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.25"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  NavigationBarButtonStyle  -->
+    <Style x:Key="NavigationBarButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Width" Value="170" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="Chrome"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ContentPresenter
+                            Name="Presenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.Content>
+                                <Grid Width="{TemplateBinding Width}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--<Rectangle
+                                        Width="16"
+                                        Height="16"
+                                        Margin="-2,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Stroke="Black"
+                                        Visibility="{DynamicResource DesignModeVisibility}" />-->
+                                    <Viewbox
+                                        Grid.Column="0"
+                                        Width="16"
+                                        Height="12"
+                                        Margin="10,0,12,0"
+                                        HorizontalAlignment="Left">
+                                        <Path
+                                            x:Name="Icon"
+                                            Data="{Binding Path=(gt:gButton.IconPath), RelativeSource={RelativeSource TemplatedParent}}"
+                                            Fill="{TemplateBinding Foreground}" />
+                                    </Viewbox>
+                                    <TextBlock
+                                        x:Name="Text"
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        x:Name="Shortcut"
+                                        Grid.Column="2"
+                                        Margin="5,0,15,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Text="{Binding Path=(gt:gButton.Shortcut), RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Grid>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.1" To="Normal" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonMouseOverColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonMouseOverColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Icon"
+                                            Storyboard.TargetProperty="Fill.Color"
+                                            To="White"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Text"
+                                            Storyboard.TargetProperty="Foreground.Color"
+                                            To="White"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shortcut"
+                                            Storyboard.TargetProperty="Foreground.Color"
+                                            To="White"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonPressedColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonPressedColor}"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="Background.Color"
+                                            To="{StaticResource ButtonBackgroundColor}"
+                                            Duration="0" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Chrome"
+                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                            To="{StaticResource ButtonBackgroundColor}"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Icon"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.25"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Text"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.25"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Shortcut"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.25"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
