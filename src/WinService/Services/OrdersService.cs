@@ -20,6 +20,7 @@ namespace WinService.Services
         {
             var models = new List<OrderModel>();
 
+            //na razie Task.Run, ale docelowo cmd.ExecuteReaderAsync
             await Task.Run(() => {                
                 for (int i = 0; i < 10; i++)
                     models.Add(new OrderModel { Contractor = "K1", Name = $"ZS-{i + 1}/24" });                

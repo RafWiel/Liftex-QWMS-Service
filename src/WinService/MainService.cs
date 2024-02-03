@@ -27,7 +27,8 @@ namespace WinService
         
         private OrdersService _ordersService;
         private CdnApiService _cdnApiService;
-        
+        private WebApiService _webApiService;
+
         #endregion
 
         #region Methods
@@ -59,7 +60,8 @@ namespace WinService
         public void Stop()
         {
             LogEvent("Zatrzymywanie usługi");
-            
+
+            _webApiService.Stop();
             _ordersService.Stop();
             _cdnApiService.Stop();            
         }      
@@ -86,28 +88,12 @@ namespace WinService
 
         private void InitializeWebApiService()
         {
-            var config = new HttpSelfHostConfiguration("http://localhost:3001");
+            _webApiService = new WebApiService
+            {
+                OrdersService = _ordersService
+            };
 
-            config.DependencyResolver = new OverriddenWebApiDependencyResolver(config.DependencyResolver)
-                .Add(typeof(OrdersController), () => new OrdersController(_ordersService));
-
-            var defaults = new HttpRouteValueDictionary();
-            defaults.Add("controller", "Values");
-            defaults.Add("action", "Get");
-
-            config.Routes.Add("Values", new HttpRoute("api/v1/values/{value}", defaults));
-
-
-            var orderDefaults = new HttpRouteValueDictionary();
-            orderDefaults.Add("controller", "Orders");
-            orderDefaults.Add("action", "Get");            
-            //defaults.Add("value", 0);
-
-            config.Routes.Add("Orders", new HttpRoute("api/v1/orders", orderDefaults));
-
-
-            var server = new HttpSelfHostServer(config);
-            server.OpenAsync().Wait();
+            _webApiService.Start();            
         }
 
         private void InitializeCdnApiService()
