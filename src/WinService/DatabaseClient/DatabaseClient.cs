@@ -78,6 +78,9 @@ namespace WinService.Database
 
         private void Connect(WinConfiguration.DatabaseConfiguration config)
         {
+            if (config == null)
+                return;
+
             try
             {
                 _sqlConn.ConnectionString = String.Format(@"                    

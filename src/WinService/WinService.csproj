@@ -99,6 +99,7 @@
     <Compile Include="Configuration\WinConfiguration.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DatabaseClient\OrdersDatabaseClient.cs" />
     <Compile Include="DatabaseClient\ProductsDatabaseClient.cs" />
     <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Helpers\OverridenWebApiDependencyResolver.cs" />

@@ -112,11 +112,11 @@ namespace WinService
 
         private void InitializeOrdersService()
         {
-            _ordersService = new OrdersService();
-            //{
-            //    DatabaseConfiguration = _config.Database,
-            //    Requests = _cdnApiService.Requests,
-            //};
+            _ordersService = new OrdersService
+            {
+                DatabaseConfiguration = _config.Database,
+                //Requests = _cdnApiService.Requests,
+            };
 
             _ordersService.Start();
 

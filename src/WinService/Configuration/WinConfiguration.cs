@@ -64,13 +64,13 @@ namespace WinService.Configuration
         public class DatabaseConfiguration
         {
             [XmlElement]
-            public string Address { get; set; } // = "localhost\\SQLEXPRESS";
+            public string Address { get; set; }  = @"devds\SQLEXPRESS";
 
             [XmlElement]
-            public string Name { get; set; } // = "ERPXL_DEV";
+            public string Name { get; set; }  = "ERPXL_DEV";
 
             [XmlIgnore]
-            public string User { get; set; } // = "B2B_service";
+            public string User { get; set; }  = "sa";
 
             [XmlElement(ElementName = "User")]
             public string UserEncrypted
@@ -86,7 +86,7 @@ namespace WinService.Configuration
             }
 
             [XmlIgnore]
-            public string Password { get; set; } // = "vWBtuu2k9zzNqVjG";
+            public string Password { get; set; }  = "sim";
 
             [XmlElement(ElementName = "Password")]
             public string PasswordEncrypted

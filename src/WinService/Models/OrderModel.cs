@@ -9,6 +9,9 @@ namespace WinService.Models
 {
     public class OrderModel
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
 
