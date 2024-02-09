@@ -13,7 +13,7 @@ using WinService.Configuration;
 
 namespace WinService.Database
 {
-    public partial class DatabaseClient : IDisposable
+    public partial class CdnDatabaseClient : IDisposable
     {
         public async Task<List<OrderModel>> GetOrders()
         {            

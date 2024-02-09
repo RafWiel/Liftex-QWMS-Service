@@ -23,7 +23,7 @@ namespace WinService.Services
         {
             try
             {
-                using (var db = new DatabaseClient(DatabaseConfiguration))
+                using (var db = new CdnDatabaseClient(DatabaseConfiguration))
                 {
                     db.LogError += InvokeLogError;
 
@@ -38,7 +38,7 @@ namespace WinService.Services
             return null;
         }
 
-        public async Task<List<OrderModel>> Get1(string? search)
+        public async Task<List<OrderModel>> GetTest(string? search)
         {
             var models = new List<OrderModel>();            
 

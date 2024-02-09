@@ -11,9 +11,9 @@ using WinService.Services;
 
 namespace WinService.ApiServices
 {
-    public class OrdersApiService : BaseService
+    public class OrdersCdnApiService : BaseService
     {
-        public ApiClient Api { get; set; }
+        public CdnApiClient Api { get; set; }
         public WinConfiguration.ApiConfiguration ApiConfiguration { get; set; }
         public WinConfiguration.DatabaseConfiguration DatabaseConfiguration { get; set; }
 

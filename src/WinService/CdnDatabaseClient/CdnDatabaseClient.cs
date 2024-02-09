@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace WinService.Database
 {
-    public partial class DatabaseClient : IDisposable
+    public partial class CdnDatabaseClient : IDisposable
     {
         #region Initialization
 
@@ -35,7 +35,7 @@ namespace WinService.Database
 
         #endregion
 
-        public DatabaseClient(WinConfiguration.DatabaseConfiguration config)
+        public CdnDatabaseClient(WinConfiguration.DatabaseConfiguration config)
         {
             _sqlConn = new SqlConnection();
             _sqlConn.InfoMessage += _sqlConn_InfoMessage;

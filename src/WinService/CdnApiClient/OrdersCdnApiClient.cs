@@ -9,7 +9,7 @@ using WinService.Database;
 
 namespace WinService.CdnApi
 {
-    public partial class ApiClient
+    public partial class CdnApiClient
     {
         public enum OrderType : uint
         {

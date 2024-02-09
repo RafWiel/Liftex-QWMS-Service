@@ -16,13 +16,15 @@ namespace WinService.Services
         private HttpSelfHostServer _server;
 
         public OrdersService OrdersService { get; set; }
+        public ProductsService ProductsService { get; set; }
 
         public void Start()
         {
             var config = new HttpSelfHostConfiguration(WebApiConfiguration.Address);
 
             config.DependencyResolver = new OverriddenWebApiDependencyResolver(config.DependencyResolver)
-                .Add(typeof(OrdersController), () => new OrdersController(OrdersService));
+                .Add(typeof(OrdersController), () => new OrdersController(OrdersService))            
+                .Add(typeof(ProductsController), () => new ProductsController(ProductsService));
 
             WebApiConfiguration.Register(config);
 

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace WinService.Models
 {
-    public class OrderModel
+    public class ProductModel
     {
-        public int Id { get; set; }
+        public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string Contractor { get; set; } = string.Empty;
+        public string Ean { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public decimal Count { get; set; }
     }
 }

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WinService.Models;
 
-#nullable enable
 namespace WinService.Interfaces
 {
-    public interface IOrdersService
+    #nullable enable
+    public interface IProductsService
     {
-        Task<List<OrderModel>?> Get(string? search);
+        Task<ProductModel?> GetOne(string ean);        
     }
 }

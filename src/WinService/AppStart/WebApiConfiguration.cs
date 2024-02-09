@@ -13,17 +13,17 @@ namespace WinService.AppStart
         public const string Address = "http://localhost:3001";
 
         public static void Register(HttpSelfHostConfiguration config)
-        {            
-            config.Routes.Add("Values", new HttpRoute("api/v1/values/{value}", new HttpRouteValueDictionary(new
-            {
-                controller = "Values",
-                action = "Get"
-            })));
-
+        {                       
             config.Routes.Add("Orders", new HttpRoute("api/v1/orders", new HttpRouteValueDictionary(new 
             { 
                 controller = "Orders",
                 action = "Get"
+            })));
+
+            config.Routes.Add("Products", new HttpRoute("api/v1/products", new HttpRouteValueDictionary(new
+            {
+                controller = "Products",
+                action = "GetOne"
             })));
         }
     }

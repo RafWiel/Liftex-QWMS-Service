@@ -10,7 +10,7 @@ using InterProcessCommunication.gTools;
 
 namespace WinService.CdnApi
 {   
-    public partial class ApiClient
+    public partial class CdnApiClient
     {
         #region Initialization
 

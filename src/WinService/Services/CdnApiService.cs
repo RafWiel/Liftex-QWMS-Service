@@ -18,7 +18,7 @@ namespace WinService.Services
     {
         #region Initialization        
 
-        private ApiClient _api = new ApiClient();
+        private CdnApiClient _api = new CdnApiClient();
         protected Thread _thread;
         protected ManualResetEvent _threadCancelEvent = new ManualResetEvent(false);
 
@@ -27,7 +27,7 @@ namespace WinService.Services
 
         public Queue<Models.IpcRequestModel> Requests { get; private set; } = new Queue<Models.IpcRequestModel>();        
         
-        private OrdersApiService _ordersService;
+        private OrdersCdnApiService _ordersService;
         //private DocumentsApiService _documentsService;
         //private ContractorsApiService _contractorsService;
 
@@ -105,12 +105,12 @@ namespace WinService.Services
 
         private void DetachApi()
         {
-            ApiClient.AttachThreadToClarion(0);
+            CdnApiClient.AttachThreadToClarion(0);
         }
 
         private void InitializeOrdersService()
         {
-            _ordersService = new OrdersApiService
+            _ordersService = new OrdersCdnApiService
             {
                 Api = _api,
                 ApiConfiguration = ApiConfiguration,

@@ -24,10 +24,11 @@ namespace WinService
 
         private WinConfiguration _config;                
         private MonitorWcfClient _monitorWcfClient = new MonitorWcfClient();
-        
-        private OrdersService _ordersService;
+                
         private CdnApiService _cdnApiService;
         private WebApiService _webApiService;
+        private OrdersService _ordersService;
+        private ProductsService _productsService;
 
         #endregion
 
@@ -48,6 +49,7 @@ namespace WinService
                 
                 InitializeCdnApiService();
                 InitializeOrdersService();
+                InitializeProductsService();
 
                 InitializeWebApiService();
             }
@@ -63,34 +65,16 @@ namespace WinService
 
             _webApiService.Stop();
             _ordersService.Stop();
+            _productsService.Stop();
             _cdnApiService.Stop();            
-        }      
-
-        private void LogEvent(string message)
-        {
-            Console.WriteLine(message);
-            _monitorWcfClient.LogEvent(message);
-            gLog.Write(message);
-        }
-
-        private void LogError(string message)
-        {
-            Console.WriteLine(message);
-
-            using (var db = new DatabaseClient(_config.Database))
-            {
-                db.ErrorLog_Insert(message);
-            }
-
-            _monitorWcfClient.LogError(message);
-            gLog.Write(message);
-        }
+        }              
 
         private void InitializeWebApiService()
         {
             _webApiService = new WebApiService
             {
-                OrdersService = _ordersService
+                OrdersService = _ordersService,
+                ProductsService = _productsService
             };
 
             _webApiService.Start();            
@@ -122,7 +106,40 @@ namespace WinService
 
             _ordersService.LogEvent += LogEvent;
             _ordersService.LogError += LogError;
-        }        
+        }
+
+        private void InitializeProductsService()
+        {
+            _productsService = new ProductsService
+            {
+                DatabaseConfiguration = _config.Database,                
+            };
+
+            _productsService.Start();
+
+            _productsService.LogEvent += LogEvent;
+            _productsService.LogError += LogError;
+        }
+
+        private void LogEvent(string message)
+        {
+            Console.WriteLine(message);
+            _monitorWcfClient.LogEvent(message);
+            gLog.Write(message);
+        }
+
+        private void LogError(string message)
+        {
+            Console.WriteLine(message);
+
+            using (var db = new CdnDatabaseClient(_config.Database))
+            {
+                db.ErrorLog_Insert(message);
+            }
+
+            _monitorWcfClient.LogError(message);
+            gLog.Write(message);
+        }
 
         #endregion
     }
