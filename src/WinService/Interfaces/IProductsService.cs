@@ -10,6 +10,6 @@ namespace WinService.Interfaces
     #nullable enable
     public interface IProductsService
     {
-        Task<ProductModel?> GetOne(string ean);        
+        Task<ProductDetailsModel?> GetProductDetails(string ean);        
     }
 }

@@ -35,7 +35,7 @@ namespace WinService.Database
 
         #endregion
 
-        public CdnDatabaseClient(WinConfiguration.DatabaseConfiguration config)
+        public CdnDatabaseClient(DatabaseConfiguration config)
         {
             _sqlConn = new SqlConnection();
             _sqlConn.InfoMessage += _sqlConn_InfoMessage;
@@ -76,7 +76,7 @@ namespace WinService.Database
 
         #region Methods
 
-        private void Connect(WinConfiguration.DatabaseConfiguration config)
+        private void Connect(DatabaseConfiguration config)
         {
             if (config == null)
                 return;

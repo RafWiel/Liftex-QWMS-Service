@@ -14,8 +14,8 @@ namespace WinService.ApiServices
     public class OrdersCdnApiService : BaseService
     {
         public CdnApiClient Api { get; set; }
-        public WinConfiguration.ApiConfiguration ApiConfiguration { get; set; }
-        public WinConfiguration.DatabaseConfiguration DatabaseConfiguration { get; set; }
+        public ApiConfiguration ApiConfiguration { get; set; }
+        public DatabaseConfiguration DatabaseConfiguration { get; set; }
 
         //public bool ProcessRequest(Models.IpcRequestModel request)
         //{

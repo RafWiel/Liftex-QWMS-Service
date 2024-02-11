@@ -17,7 +17,7 @@ namespace WinService.Services
 {
     public class OrdersService : BaseService, IOrdersService
     {
-        public WinConfiguration.DatabaseConfiguration? DatabaseConfiguration { get; set; }
+        public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
 
         public async Task<List<OrderModel>?> Get(string? search)
         {
@@ -36,19 +36,16 @@ namespace WinService.Services
             }
 
             return null;
-        }
 
-        public async Task<List<OrderModel>> GetTest(string? search)
-        {
-            var models = new List<OrderModel>();            
+            //var models = new List<OrderModel>();
 
-            //na razie Task.Run, ale docelowo cmd.ExecuteReaderAsync
-            await Task.Run(() => {                
-                for (int i = 0; i < 1000; i++)
-                    models.Add(new OrderModel { Contractor = "K1", Name = $"ZS-{i + 1}/24" });                
-            });
+            ////na razie Task.Run, ale docelowo cmd.ExecuteReaderAsync
+            //await Task.Run(() => {
+            //    for (int i = 0; i < 1000; i++)
+            //        models.Add(new OrderModel { Contractor = "K1", Name = $"ZS-{i + 1}/24" });
+            //});
 
-            return models;
+            //return models;
         }
     }
 }

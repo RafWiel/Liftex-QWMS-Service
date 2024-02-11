@@ -22,8 +22,8 @@ namespace WinService.Services
         protected Thread _thread;
         protected ManualResetEvent _threadCancelEvent = new ManualResetEvent(false);
 
-        public WinConfiguration.ApiConfiguration ApiConfiguration { get; set; }        
-        public WinConfiguration.DatabaseConfiguration DatabaseConfiguration { get; set; }
+        public ApiConfiguration ApiConfiguration { get; set; }        
+        public DatabaseConfiguration DatabaseConfiguration { get; set; }
 
         public Queue<Models.IpcRequestModel> Requests { get; private set; } = new Queue<Models.IpcRequestModel>();        
         

@@ -22,7 +22,7 @@ namespace WinService
     {
         #region Initialization
 
-        private WinConfiguration _config;                
+        private Configuration.Configuration _config;                
         private MonitorWcfClient _monitorWcfClient = new MonitorWcfClient();
                 
         private CdnApiService _cdnApiService;
@@ -38,14 +38,14 @@ namespace WinService
         {
             try
             {
-                var cfgFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "DataSoft", WinConfiguration.FileName);
+                var cfgFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "DataSoft", Configuration.Configuration.FileName);
                 var logFilePath = cfgFilePath.Replace(".cfg", ".log");
 
                 gLog.FilePath = logFilePath;
 
                 LogEvent($"Uruchamianie usługi - ver {Assembly.GetExecutingAssembly().GetName().Version}");
 
-                _config = WinConfiguration.Load(cfgFilePath);
+                _config = Configuration.Configuration.Load(cfgFilePath);
                 
                 InitializeCdnApiService();
                 InitializeOrdersService();
@@ -98,8 +98,7 @@ namespace WinService
         {
             _ordersService = new OrdersService
             {
-                DatabaseConfiguration = _config.Database,
-                //Requests = _cdnApiService.Requests,
+                DatabaseConfiguration = _config.Database,                
             };
 
             _ordersService.Start();
@@ -112,7 +111,8 @@ namespace WinService
         {
             _productsService = new ProductsService
             {
-                DatabaseConfiguration = _config.Database,                
+                DatabaseConfiguration = _config.Database,
+                PropertiesConfiguration = _config.Properties
             };
 
             _productsService.Start();

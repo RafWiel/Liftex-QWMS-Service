@@ -96,7 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStart\WebApiConfiguration.cs" />
-    <Compile Include="Configuration\WinConfiguration.cs" />
+    <Compile Include="Configuration\ApiConfiguration.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\DatabaseConfiguration.cs" />
+    <Compile Include="Configuration\PropertiesConfiguration.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="CdnDatabaseClient\OrdersCdnDatabaseClient.cs" />
@@ -111,7 +114,7 @@
     <Compile Include="Helpers\CdnApiErrors.cs" />
     <Compile Include="CdnDatabaseClient\CdnDatabaseClient.cs" />
     <Compile Include="CdnApiClient\OrdersCdnApiClient.cs" />
-    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductDetailsModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />
