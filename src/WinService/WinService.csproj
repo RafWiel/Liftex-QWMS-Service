@@ -114,8 +114,9 @@
     <Compile Include="Helpers\CdnApiErrors.cs" />
     <Compile Include="CdnDatabaseClient\CdnDatabaseClient.cs" />
     <Compile Include="CdnApiClient\OrdersCdnApiClient.cs" />
-    <Compile Include="Models\ProductDetailsModel.cs" />
-    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\Products\ProductDetailsCountModel.cs" />
+    <Compile Include="Models\Products\ProductDetailsModel.cs" />
+    <Compile Include="Models\Orders\OrderModel.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />
     <Compile Include="Services\ProductsService.cs" />

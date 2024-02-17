@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinService.Models;
+using WinService.Models.Products;
 using WinService.Configuration;
 
 #nullable enable

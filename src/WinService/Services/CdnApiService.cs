@@ -105,7 +105,14 @@ namespace WinService.Services
 
         private void DetachApi()
         {
-            CdnApiClient.AttachThreadToClarion(0);
+            try
+            {
+                CdnApiClient.AttachThreadToClarion(0);
+            }
+            catch (Exception ex)
+            {
+                InvokeLogError(ex.ToString());
+            }            
         }
 
         private void InitializeOrdersService()

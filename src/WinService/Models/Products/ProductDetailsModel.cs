@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinService.Models
+namespace WinService.Models.Products
 {
     public class ProductDetailsModel
     {
@@ -15,5 +15,6 @@ namespace WinService.Models
         public string Ean { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public decimal Count { get; set; }
+        public List<ProductDetailsCountModel> Items { get; set; } = new List<ProductDetailsCountModel>();
     }
 }

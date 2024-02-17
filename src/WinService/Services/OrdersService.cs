@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
-using WinService.Models;
+using WinService.Models.Orders;
 
 namespace WinService.Services
 {
