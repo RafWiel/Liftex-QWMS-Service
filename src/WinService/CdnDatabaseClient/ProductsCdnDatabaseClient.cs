@@ -119,6 +119,8 @@ namespace WinService.Database
                         a.Twr_Archiwalny = 0      
                 ";
 
+                var detailsCount = await GetProductDetailsCount(id);
+
                 using (var cmd = new SqlCommand(commandText, _sqlConn))
                 {
                     cmd.Parameters.Add(new SqlParameter("@id", id));
@@ -127,7 +129,7 @@ namespace WinService.Database
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {                        
                         if (!reader.Read())
-                            return null;
+                            return null;                        
 
                         return new ProductDetailsModel
                         {
@@ -136,7 +138,8 @@ namespace WinService.Database
                             Name = reader["Name"].ToString(),
                             Ean = reader["Ean"].ToString(),
                             Price = Convert.ToInt32(reader["Price"]),
-                            Count = Convert.ToInt32(reader["Count"])
+                            Count = Convert.ToInt32(reader["Count"]),
+                            Items = detailsCount
                         };                        
                     }
                 }
@@ -149,6 +152,100 @@ namespace WinService.Database
             return null;
         }
 
-        
+
+        public async Task<List<ProductDetailsCountModel?>> GetProductDetailsCount(int id)
+        {
+#pragma warning disable 0219
+
+            string test = @"
+                declare @id int
+                set @id = 1                
+            ";
+
+#pragma warning restore 0219
+
+            try
+            {
+                var commandText = @"
+                    select 
+	                    m.MAG_GIDNumer as WarehouseId, 
+	                    m.MAG_Kod as WarehouseCode, 
+	                    (isnull(z.SaleCount, 0) - isnull(r.ResCount, 0)) as SaleCount, 		
+	                    isnull(z.MagCount, 0) as WarehouseCount, 
+	                    isnull(r.ResCount, 0) as ReservationCount,	
+                        isnull(z.Twr_JmCalkowita, 0) as IsNatural,
+                        isnull(z.Twr_JmFormat, 0) as DecimalPlaces
+                    from 
+	                    CDN.Magazyny m 
+                    left join 
+                    (
+	                    select 
+		                    Rez_MagNumer, 
+		                    sum(Rez_Ilosc - Rez_Zrealizowano) as ResCount -- [PT] Tylko ilości niezrealizowane							
+	                    from 
+		                    CDN.Rezerwacje 						
+	                    where 
+		                    Rez_TwrNumer = @id and 
+		                    Rez_GIDTyp = 2576 and
+				            CDN.TSToDate(Rez_DataWaznosci,0)>=getdate() --[PT] Tylko aktywne
+	                    group by 
+		                    Rez_MagNumer
+                    ) r on 
+	                    r.Rez_MagNumer = m.MAG_GIDNumer                         	
+                    left join 
+                    (
+	                    select 
+		                    z.Twz_MagNumer, 
+		                    sum(z.Twz_IlMag) as MagCount, 
+		                    sum(z.Twz_Ilosc) as SaleCount,
+							t.Twr_JmCalkowita,
+							t.Twr_JmFormat 
+	                    from 
+		                    CDN.TwrZasoby z 
+						inner join CDN.TwrKarty t on
+							z.Twz_TwrNumer = t.Twr_GIDNumer
+	                    where 
+		                    z.Twz_TwrNumer = @id 
+	                    group by 
+		                    z.Twz_MagNumer,
+							t.Twr_JmCalkowita,
+							t.Twr_JmFormat
+                    ) z on 
+	                    z.Twz_MagNumer = m.MAG_GIDNumer     
+                    where
+                        m.MAG_Pico = 0   
+                ";
+
+                using (var cmd = new SqlCommand(commandText, _sqlConn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@id", id));                    
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        var list = new List<ProductDetailsCountModel?>();
+                        while (reader.Read())
+                        {
+                            list.Add(new ProductDetailsCountModel
+                            {
+                                WarehouseId = Convert.ToInt32(reader["WarehouseId"]),
+                                WarehouseCode = reader["WarehouseCode"].ToString(),
+                                SaleCount = Convert.ToDecimal(reader["SaleCount"]),
+                                WarehouseCount = Convert.ToDecimal(reader["WarehouseCount"]),
+                                ReservationCount = Convert.ToDecimal(reader["ReservationCount"]),
+                                MeasureUnitDecimalPlaces = Convert.ToBoolean(reader["IsNatural"]) ? 0 : Convert.ToInt32(reader["DecimalPlaces"]),
+                            });
+                        }
+
+                        return list;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError?.Invoke(ex.Message);
+            }
+
+            return null;
+        }
     }    
 }
