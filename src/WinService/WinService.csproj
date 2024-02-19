@@ -50,6 +50,24 @@
     <Nullable>enable</Nullable>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>8.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="cdn_api20232.net">
       <HintPath>..\..\..\..\_api\cdn_api20232.net.dll</HintPath>
@@ -117,6 +135,7 @@
     <Compile Include="Models\Products\ProductDetailsCountModel.cs" />
     <Compile Include="Models\Products\ProductDetailsModel.cs" />
     <Compile Include="Models\Orders\OrderModel.cs" />
+    <Compile Include="ServicesLocal\ProductsService.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />
     <Compile Include="Services\ProductsService.cs" />

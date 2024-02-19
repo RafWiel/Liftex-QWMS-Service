@@ -15,6 +15,8 @@ using WinService.Models.Products;
 
 namespace WinService.Services
 {
+    #if !LOCAL
+
     public class ProductsService : BaseService, IProductsService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
@@ -22,6 +24,7 @@ namespace WinService.Services
         
         public async Task<ProductDetailsModel?> GetProductDetails(string ean)
         {
+
             try
             {
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))
@@ -41,37 +44,8 @@ namespace WinService.Services
             }
 
             return null;
-
-            //Thread.Sleep(1000);
-            
-            //var model = new ProductDetailsModel()
-            //{
-            //    Id = 1,
-            //    Code = $"T1",
-            //    Name = $"Towar 1 dłuższa nazwa",
-            //    Ean = "2010000000014",
-            //    Price = 9999.99M,
-            //    Count = 9999,
-            //    Items = new List<ProductDetailsCountModel> 
-            //    { 
-            //        new ProductDetailsCountModel
-            //        { 
-            //            WarehouseCode = "Mag 1",
-            //            SaleCount = 10.5M,
-            //            WarehouseCount = 20,
-            //            ReservationCount = 33.5M
-            //        },
-            //        new ProductDetailsCountModel
-            //        {
-            //            WarehouseCode = "Mag 2",
-            //            SaleCount = 101.5M,
-            //            WarehouseCount = 201,
-            //            ReservationCount = 333.5M
-            //        }
-            //    }
-            //};
-
-            //return model;            
         }        
     }
+
+    #endif
 }
