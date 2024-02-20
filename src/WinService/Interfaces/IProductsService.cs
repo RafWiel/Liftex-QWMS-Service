@@ -8,8 +8,10 @@ using WinService.Models.Products;
 namespace WinService.Interfaces
 {
     #nullable enable
+
     public interface IProductsService
     {
-        Task<ProductDetailsModel?> GetProductDetails(string ean);        
+        Task<List<ProductListModel>?> GetProducts();
+        Task<ProductDetailsModel?> GetProduct(string ean);        
     }
 }

@@ -21,10 +21,28 @@ namespace WinService.Services
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
-        
-        public async Task<ProductDetailsModel?> GetProductDetails(string ean)
-        {
 
+        public async Task<List<ProductListModel>?> GetProducts()
+        {
+            try
+            {
+                using (var db = new CdnDatabaseClient(DatabaseConfiguration))
+                {
+                    db.LogError += InvokeLogError;
+
+                    return await db.GetProducts(PropertiesConfiguration.WarehouseId);
+                }
+            }
+            catch (Exception ex)
+            {
+                InvokeLogError(ex.ToString());
+            }
+
+            return null;
+        }
+
+        public async Task<ProductDetailsModel?> GetProduct(string ean)
+        {
             try
             {
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))
@@ -35,7 +53,7 @@ namespace WinService.Services
                     if (id == null)
                         return null;
 
-                    return await db.GetProductDetails(id.Value, PropertiesConfiguration.WarehouseId);
+                    return await db.GetProduct(id.Value, PropertiesConfiguration.WarehouseId);
                 }
             }
             catch (Exception ex)

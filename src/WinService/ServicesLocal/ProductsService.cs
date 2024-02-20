@@ -22,7 +22,7 @@ namespace WinService.Services
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
         
-        public async Task<ProductDetailsModel?> GetProductDetails(string ean)
+        public async Task<ProductDetailsModel?> GetProduct(string ean)
         {                        
             var model = await Task.Run(() =>
             {

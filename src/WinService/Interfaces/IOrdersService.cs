@@ -10,6 +10,6 @@ namespace WinService.Interfaces
 {
     public interface IOrdersService
     {
-        Task<List<OrderModel>?> Get(string? search);
+        Task<List<OrderListModel>?> Get(string? search);
     }
 }

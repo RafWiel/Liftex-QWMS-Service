@@ -19,7 +19,7 @@ namespace WinService.Services
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
 
-        public async Task<List<OrderModel>?> Get(string? search)
+        public async Task<List<OrderListModel>?> Get(string? search)
         {
             try
             {

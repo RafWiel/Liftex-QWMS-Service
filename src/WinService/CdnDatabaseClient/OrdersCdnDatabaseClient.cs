@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 using WinService.Models.Orders;
 using WinService.Configuration;
 
+#nullable enable
+
 namespace WinService.Database
 {
     public partial class CdnDatabaseClient : IDisposable
     {
-        public async Task<List<OrderModel>?> GetOrders()
+        public async Task<List<OrderListModel>?> GetOrders()
         {            
             try
             {
@@ -54,11 +56,11 @@ namespace WinService.Database
                 {
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        var orders = new List<OrderModel>();
+                        var orders = new List<OrderListModel>();
 
                         while (reader.Read())
                         {                            
-                            orders.Add(new OrderModel
+                            orders.Add(new OrderListModel
                             { 
                                 Id = Convert.ToInt32(reader["Id"]),
                                 Name = reader["Name"].ToString(),

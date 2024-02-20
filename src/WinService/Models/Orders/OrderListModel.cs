@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinService.Models.Orders
 {
-    public class OrderModel
+    public class OrderListModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
