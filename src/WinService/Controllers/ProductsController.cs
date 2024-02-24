@@ -24,7 +24,7 @@ namespace WinService.Controllers
         [Route("api/v1/products")]
         public async Task<HttpResponseMessage> Get()
         {
-            var model = await _service.GetProducts();
+            var model = await _service.Get();
             if (model == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 
@@ -33,9 +33,9 @@ namespace WinService.Controllers
 
         [HttpGet]
         [Route("api/v1/product")]
-        public async Task<HttpResponseMessage> GetProduct([FromUri] string ean)
+        public async Task<HttpResponseMessage> GetSingle([FromUri] string ean)
         {
-            var model = await _service.GetProduct(ean);
+            var model = await _service.GetSingle(ean);
             if (model == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 

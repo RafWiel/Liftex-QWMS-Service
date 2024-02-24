@@ -29,7 +29,7 @@ namespace WinService.AppStart
             config.Routes.Add("Product", new HttpRoute("api/v1/product", new HttpRouteValueDictionary(new
             {
                 controller = "Products",
-                action = "GetProduct"
+                action = "GetSingle"
             })));
         }
     }

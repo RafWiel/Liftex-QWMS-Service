@@ -136,6 +136,7 @@
     <Compile Include="Models\Products\ProductListModel.cs" />
     <Compile Include="Models\Products\ProductDetailsModel.cs" />
     <Compile Include="Models\Orders\OrderListModel.cs" />
+    <Compile Include="ServicesLocal\OrdersService.cs" />
     <Compile Include="ServicesLocal\ProductsService.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />

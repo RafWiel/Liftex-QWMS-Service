@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
-using WinService.Models.Products;
+using QWMS.Models.Products;
 
 namespace WinService.Services
 {
@@ -21,8 +21,34 @@ namespace WinService.Services
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
-        
-        public async Task<ProductDetailsModel?> GetProduct(string ean)
+
+        public async Task<List<ProductListModel>?> Get()
+        {
+            var models = await Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+                var models = new List<ProductListModel>();
+
+                for (int i = 1; i <= 100; i++)
+                {
+                    models.Add(new ProductListModel()
+                    {
+                        Id = i,
+                        Code = $"T{i}",
+                        Name = $"Towar {i}",
+                        Price = i * 10.1M,
+                        Count = 1 * 2,
+                        MeasureUnitDecimalPlaces = 3
+                    });
+                }
+
+                return models;
+            });
+
+            return models;
+        }
+
+        public async Task<ProductDetailsModel?> GetSingle(string ean)
         {                        
             var model = await Task.Run(() =>
             {
@@ -36,6 +62,7 @@ namespace WinService.Services
                     Ean = "2010000000014",
                     Price = 9999.99M,
                     Count = 9999,
+                    MeasureUnitDecimalPlaces = 3,
                     Items = new List<ProductDetailsCountModel>
                     {
                         new ProductDetailsCountModel
@@ -55,7 +82,25 @@ namespace WinService.Services
                             WarehouseCount = 201,
                             ReservationCount = 333.5M,
                             MeasureUnitDecimalPlaces = 0
-                        }
+                        },
+                        new ProductDetailsCountModel
+                        {
+                            WarehouseId = 3,
+                            WarehouseCode = "Mag 3",
+                            SaleCount = 0,
+                            WarehouseCount = 0,
+                            ReservationCount = 0,
+                            MeasureUnitDecimalPlaces = 0
+                        },
+                        new ProductDetailsCountModel
+                        {
+                            WarehouseId = 4,
+                            WarehouseCode = "Mag 4",
+                            SaleCount = 0,
+                            WarehouseCount = 0,
+                            ReservationCount = 0,
+                            MeasureUnitDecimalPlaces = 0
+                        }                        
                     }
                 };                
             });

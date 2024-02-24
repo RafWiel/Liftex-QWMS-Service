@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinService.Models.Products;
+using QWMS.Models.Products;
 using WinService.Configuration;
 
 #nullable enable
@@ -200,8 +200,8 @@ namespace WinService.Database
                         --a.Twr_Wartosc1, 
                         a.Twr_EAN as Ean,
                         --a.Twr_Jm,
-                        --a.Twr_JmCalkowita,
-                        --a.Twr_JmFormat,
+                        a.Twr_JmCalkowita as IsNatural,
+                        a.Twr_JmFormat as DecimalPlaces,
                         b.Twc_Wartosc as Price,
                         isnull(z.Count, 0) as Count
                     from 
@@ -267,6 +267,7 @@ namespace WinService.Database
                             Ean = reader["Ean"].ToString(),
                             Price = Convert.ToInt32(reader["Price"]),
                             Count = Convert.ToInt32(reader["Count"]),
+                            MeasureUnitDecimalPlaces = Convert.ToBoolean(reader["IsNatural"]) ? 0 : Convert.ToInt32(reader["DecimalPlaces"]),
                             Items = detailsCount
                         };                        
                     }
@@ -280,7 +281,7 @@ namespace WinService.Database
             return null;
         }
 
-        public async Task<List<ProductDetailsCountModel?>> GetProductDetailsCount(int id)
+        public async Task<List<ProductDetailsCountModel>?> GetProductDetailsCount(int id)
         {
             #pragma warning disable 0219
 
@@ -349,7 +350,7 @@ namespace WinService.Database
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        var list = new List<ProductDetailsCountModel?>();
+                        var list = new List<ProductDetailsCountModel>();
                         while (reader.Read())
                         {
                             list.Add(new ProductDetailsCountModel

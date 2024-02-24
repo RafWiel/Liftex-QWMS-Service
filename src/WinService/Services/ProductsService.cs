@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
-using WinService.Models.Products;
+using QWMS.Models.Products;
 
 namespace WinService.Services
 {
@@ -22,7 +22,7 @@ namespace WinService.Services
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
 
-        public async Task<List<ProductListModel>?> GetProducts()
+        public async Task<List<ProductListModel>?> Get()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WinService.Services
             return null;
         }
 
-        public async Task<ProductDetailsModel?> GetProduct(string ean)
+        public async Task<ProductDetailsModel?> GetSingle(string ean)
         {
             try
             {

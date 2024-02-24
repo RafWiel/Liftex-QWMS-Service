@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinService.Models.Products;
+using QWMS.Models.Products;
 
 namespace WinService.Interfaces
 {
@@ -11,7 +11,7 @@ namespace WinService.Interfaces
 
     public interface IProductsService
     {
-        Task<List<ProductListModel>?> GetProducts();
-        Task<ProductDetailsModel?> GetProduct(string ean);        
+        Task<List<ProductListModel>?> Get();
+        Task<ProductDetailsModel?> GetSingle(string ean);                       
     }
 }

@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
-using WinService.Models.Orders;
+using QWMS.Models.Orders;
 
 namespace WinService.Services
 {
+    #if !LOCAL
+
     public class OrdersService : BaseService, IOrdersService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
@@ -48,4 +50,6 @@ namespace WinService.Services
             //return models;
         }
     }
+
+    #endif
 }
