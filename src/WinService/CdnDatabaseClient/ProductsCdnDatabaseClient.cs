@@ -17,13 +17,18 @@ namespace WinService.Database
 {
     public partial class CdnDatabaseClient : IDisposable
     {
-        public async Task<List<ProductListModel>?> GetProducts(int warehouseId, int loadedCount = 0)
+        public async Task<List<ProductListModel>?> GetProducts(int warehouseId, string? search, int? page)
         {
             #pragma warning disable 0219
 
             string test = @"
                 declare @warehouseId int
-				set @warehouseId = 1             
+                declare @search varchar(100)
+                declare @skipCount int				
+
+                set @warehouseId = 1                  
+                set @skipCount = 0
+                set @search = 'k1'
             ";
 
             #pragma warning restore 0219
@@ -77,18 +82,16 @@ namespace WinService.Database
                         a.Twr_GIDNumer = z.TwZ_TwrNumer
                     where 
                         a.Twr_Typ in (1, 2) and
-                        a.Twr_Archiwalny = 0   
-                ";
-
-                //if (filter.Length > 0)
-                //{
-                //    commandText += @"and 
-                //        (
-                //            a.Twr_Kod like + '%' + @filter + '%' or 
-                //            a.Twr_Nazwa like + '%' + @filter + '%'                            
-                //        )
-                //    ";
-                //}
+                        a.Twr_Archiwalny = 0 and
+                        @search is null or @search is not null and 
+                        (
+                            a.Twr_Kod like + '%' + @search + '%' or 
+                            a.Twr_Nazwa like + '%' + @search + '%'
+                        )
+                    order by a.Twr_Kod asc   
+                    offset (@skipCount) rows 
+                    fetch next (50) rows only
+                ";                
 
                 ////pokazuj stany zerowe
                 //if (showEmptyInventory == false)
@@ -101,17 +104,12 @@ namespace WinService.Database
                 //    commandText += @"
                 //        and len(Twr_Ean) = 0
                 //    ";
-
-                //commandText += @"
-                //    order by a.Twr_Kod asc   
-                //    offset (@loadedCount) rows 
-                //    fetch next (50) rows only
-                //";
-
+                
                 using (var cmd = new SqlCommand(commandText, _sqlConn))
                 {
                     cmd.Parameters.Add(new SqlParameter("@warehouseId", warehouseId));
-                    cmd.Parameters.Add(new SqlParameter("@loadedCount", loadedCount));
+                    cmd.Parameters.Add(search != null ? new SqlParameter("@search", search) : new SqlParameter("@search", DBNull.Value));
+                    cmd.Parameters.Add(new SqlParameter("@skipCount", ((page ?? 1) - 1) * 50));
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {

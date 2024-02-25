@@ -22,9 +22,9 @@ namespace WinService.Controllers
 
         [HttpGet]
         [Route("api/v1/products")]
-        public async Task<HttpResponseMessage> Get()
+        public async Task<HttpResponseMessage> Get([FromUri] string? search = null, int? page = null)
         {
-            var model = await _service.Get();
+            var model = await _service.Get(search, page);
             if (model == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 

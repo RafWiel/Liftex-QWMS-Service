@@ -22,7 +22,7 @@ namespace WinService.Services
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
 
-        public async Task<List<ProductListModel>?> Get()
+        public async Task<List<ProductListModel>?> Get(string? search, int? page)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace WinService.Services
                 {
                     db.LogError += InvokeLogError;
 
-                    return await db.GetProducts(PropertiesConfiguration.WarehouseId);
+                    return await db.GetProducts(PropertiesConfiguration.WarehouseId, search, page);
                 }
             }
             catch (Exception ex)

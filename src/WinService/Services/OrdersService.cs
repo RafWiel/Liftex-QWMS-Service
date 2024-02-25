@@ -21,7 +21,7 @@ namespace WinService.Services
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
 
-        public async Task<List<OrderListModel>?> Get(string? search)
+        public async Task<List<OrderListModel>?> Get(string? search, int? page)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace WinService.Services
                 {
                     db.LogError += InvokeLogError;
 
-                    return await db.GetOrders();                    
+                    return await db.GetOrders(search, page);                    
                 }
             }
             catch (Exception ex)

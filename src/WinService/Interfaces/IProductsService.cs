@@ -11,7 +11,7 @@ namespace WinService.Interfaces
 
     public interface IProductsService
     {
-        Task<List<ProductListModel>?> Get();
+        Task<List<ProductListModel>?> Get(string? search, int? page);
         Task<ProductDetailsModel?> GetSingle(string ean);                       
     }
 }

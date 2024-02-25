@@ -17,8 +17,15 @@ namespace WinService.Database
 {
     public partial class CdnDatabaseClient : IDisposable
     {
-        public async Task<List<OrderListModel>?> GetOrders()
-        {            
+        public async Task<List<OrderListModel>?> GetOrders(string? search, int? page)
+        {
+            string test = @"                                            
+                declare @search varchar(100)
+                declare @skipCount int
+                set @skipCount = 0
+                set @search = 'k1'
+            ";
+            
             try
             {
                 var commandText = @"
@@ -47,13 +54,38 @@ namespace WinService.Database
                     where
                         a.ZaN_ZamTyp = 1280 and
 	                    a.ZaN_Stan in (3, 5) and 
-	                    a.ZaN_Rodzaj = 4 	                    
-                    order by
-                        a.ZaN_GIDNumer desc
+	                    a.ZaN_Rodzaj = 4 and
+						(
+							@search is null or @search is not null and 
+							(
+								b.Knt_Akronim like '%' + @search + '%' or                           
+								CDN.NumerDokumentu
+								(
+									CDN.DokMapTypDokumentu
+									(
+										a.ZaN_GIDTyp,
+										a.ZaN_ZamTyp, 
+										a.ZaN_Rodzaj
+									), 
+									0, 
+									0,
+									a.ZaN_ZamNumer, 
+									a.ZaN_ZamRok,
+									a.ZaN_ZamSeria, 
+									a.ZaN_ZamMiesiac
+								) like '%' + @search + '%'                             
+							) 							 
+						)						    
+                    order by a.ZaN_GIDNumer desc
+                    offset (@skipCount) rows 
+                    fetch next (50) rows only
                 ";
 
                 using (var cmd = new SqlCommand(commandText, _sqlConn))
-                {
+                {                    
+                    cmd.Parameters.Add(search != null ? new SqlParameter("@search", search) : new SqlParameter("@search", DBNull.Value));
+                    cmd.Parameters.Add(new SqlParameter("@skipCount", ((page ?? 1) - 1) * 50));
+
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         var orders = new List<OrderListModel>();
