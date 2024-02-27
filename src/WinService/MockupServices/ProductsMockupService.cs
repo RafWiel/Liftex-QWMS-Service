@@ -15,14 +15,14 @@ using QWMS.Models.Products;
 
 namespace WinService.Services
 {
-    #if LOCAL
+    #if MOCKUP
 
     public class ProductsService : BaseService, IProductsService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
 
-        public async Task<List<ProductListModel>?> Get()
+        public async Task<List<ProductListModel>?> Get(string? search, int? page)
         {
             var models = await Task.Run(() =>
             {
@@ -42,24 +42,38 @@ namespace WinService.Services
                     });
                 }
 
-                return models;
+                return models
+                    .Where(u =>
+                        string.IsNullOrEmpty(search) || (!string.IsNullOrEmpty(search) &&
+                            (u.Code.ToLower().Contains(search?.ToLower())) ||
+                            (u.Name.ToLower().Contains(search?.ToLower())))
+                    )
+                    .Skip(((page ?? 1) - 1) * 25)
+                    .Take(25)
+                    .ToList();
             });
 
             return models;
         }
 
-        public async Task<ProductDetailsModel?> GetSingle(string ean)
+        public async Task<ProductDetailsModel?> GetSingle(int? id, string? ean)
         {                        
             var model = await Task.Run(() =>
             {
                 Thread.Sleep(2000);
 
+                if (id == null)
+                    id = 1;
+
+                if (ean == null)
+                    ean = "2010000000014";
+
                 return new ProductDetailsModel()
                 {
                     Id = 1,
-                    Code = $"T1",
-                    Name = $"Towar 1 dłuższa nazwa",
-                    Ean = "2010000000014",
+                    Code = $"T{id}",
+                    Name = $"Towar {id} dłuższa nazwa",
+                    Ean = ean,
                     Price = 9999.99M,
                     Count = 9999,
                     MeasureUnitDecimalPlaces = 3,

@@ -15,7 +15,7 @@ using QWMS.Models.Orders;
 
 namespace WinService.Services
 {
-    #if !LOCAL
+    #if !MOCKUP
 
     public class OrdersService : BaseService, IOrdersService
     {

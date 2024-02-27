@@ -9,6 +9,8 @@ using System.Web.Http;
 using WinService.Interfaces;
 using WinService.Models;
 
+#nullable enable
+
 namespace WinService.Controllers
 {
     public class ProductsController : ApiController
@@ -33,9 +35,9 @@ namespace WinService.Controllers
 
         [HttpGet]
         [Route("api/v1/product")]
-        public async Task<HttpResponseMessage> GetSingle([FromUri] string ean)
+        public async Task<HttpResponseMessage> GetSingle([FromUri] int? id = null, string? ean = null)
         {
-            var model = await _service.GetSingle(ean);
+            var model = await _service.GetSingle(id, ean);
             if (model == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 

@@ -62,7 +62,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;MOCKUP</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>8.0</LangVersion>
@@ -136,8 +136,8 @@
     <Compile Include="Models\Products\ProductListModel.cs" />
     <Compile Include="Models\Products\ProductDetailsModel.cs" />
     <Compile Include="Models\Orders\OrderListModel.cs" />
-    <Compile Include="ServicesLocal\OrdersService.cs" />
-    <Compile Include="ServicesLocal\ProductsService.cs" />
+    <Compile Include="MockupServices\OrdersMockupService.cs" />
+    <Compile Include="MockupServices\ProductsMockupService.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />
     <Compile Include="Services\ProductsService.cs" />

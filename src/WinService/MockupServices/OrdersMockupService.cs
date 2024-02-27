@@ -15,13 +15,13 @@ using QWMS.Models.Orders;
 
 namespace WinService.Services
 {
-    #if LOCAL
+    #if MOCKUP
 
     public class OrdersService : BaseService, IOrdersService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
 
-        public async Task<List<OrderListModel>?> Get(string? search)
+        public async Task<List<OrderListModel>?> Get(string? search, int? page)
         {
             var models = await Task.Run(() =>
             {
@@ -39,7 +39,15 @@ namespace WinService.Services
                     });
                 }
 
-                return models;
+                return models
+                    .Where(u =>
+                        string.IsNullOrEmpty(search) || (!string.IsNullOrEmpty(search) && 
+                            (u.Contractor.ToLower().Contains(search?.ToLower())) ||
+                            (u.Name.ToLower().Contains(search?.ToLower()))) 
+                    )
+                    .Skip(((page ?? 1) - 1) * 25)
+                    .Take(25)
+                    .ToList();
             });
 
             return models;

@@ -15,7 +15,7 @@ using QWMS.Models.Products;
 
 namespace WinService.Services
 {
-    #if !LOCAL
+    #if !MOCKUP
 
     public class ProductsService : BaseService, IProductsService
     {
@@ -41,7 +41,7 @@ namespace WinService.Services
             return null;
         }
 
-        public async Task<ProductDetailsModel?> GetSingle(string ean)
+        public async Task<ProductDetailsModel?> GetSingle(int? id, string? ean)
         {
             try
             {
@@ -49,7 +49,9 @@ namespace WinService.Services
                 {
                     db.LogError += InvokeLogError;
 
-                    var id = await db.GetProductId(ean);
+                    if (id == null && ean != null)
+                        id = await db.GetProductId(ean);
+
                     if (id == null)
                         return null;
 
