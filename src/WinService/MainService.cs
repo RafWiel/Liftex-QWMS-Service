@@ -27,9 +27,11 @@ namespace WinService
                 
         private CdnApiService _cdnApiService;
         private WebApiService _webApiService;
+
+        private BarcodesService _barcodesService;
         private OrdersService _ordersService;
         private ProductsService _productsService;
-
+        
         #endregion
 
         #region Methods
@@ -48,9 +50,11 @@ namespace WinService
                 _config = Configuration.Configuration.Load(cfgFilePath);
                 
                 InitializeCdnApiService();
+
+                InitializeBarcodesService();
                 InitializeOrdersService();
                 InitializeProductsService();
-
+                
                 InitializeWebApiService();
             }
             catch (Exception ex)
@@ -64,20 +68,24 @@ namespace WinService
             LogEvent("Zatrzymywanie usługi");
 
             _webApiService.Stop();
+
+            _barcodesService.Stop();
             _ordersService.Stop();
             _productsService.Stop();
+            
             _cdnApiService.Stop();            
-        }              
+        }
 
         private void InitializeWebApiService()
         {
             _webApiService = new WebApiService
             {
+                BarcodesService = _barcodesService,
                 OrdersService = _ordersService,
-                ProductsService = _productsService
+                ProductsService = _productsService,
             };
 
-            _webApiService.Start();            
+            _webApiService.Start();
         }
 
         private void InitializeCdnApiService()
@@ -92,6 +100,19 @@ namespace WinService
 
             _cdnApiService.LogEvent += LogEvent;
             _cdnApiService.LogError += LogError;
+        }
+
+        private void InitializeBarcodesService()
+        {
+            _barcodesService = new BarcodesService
+            {
+                DatabaseConfiguration = _config.Database,
+            };
+
+            _barcodesService.Start();
+
+            _barcodesService.LogEvent += LogEvent;
+            _barcodesService.LogError += LogError;
         }
 
         private void InitializeOrdersService()
@@ -119,7 +140,7 @@ namespace WinService
 
             _productsService.LogEvent += LogEvent;
             _productsService.LogError += LogError;
-        }
+        }        
 
         private void LogEvent(string message)
         {

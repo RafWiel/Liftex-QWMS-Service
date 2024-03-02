@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,22 +9,24 @@ using System.Web.Http;
 using WinService.Interfaces;
 using WinService.Models;
 
+#nullable enable
+
 namespace WinService.Controllers
 {
-    public class OrdersController : ApiController
+    public class BarcodesController : ApiController
     {
-        private readonly IOrdersService _service;
+        private readonly IBarcodesService _service;
 
-        public OrdersController(IOrdersService service)
+        public BarcodesController(IBarcodesService service)
         {
             _service = service;
         }        
 
         [HttpGet]
-        [Route("api/v1/orders")]
-        public async Task<HttpResponseMessage> Get([FromUri] string? search = null, int? page = null)
+        [Route("api/v1/barcodes")]
+        public async Task<HttpResponseMessage> Get([FromUri(Name = "product-id")] int productId, int? page = null)
         {
-            var models = await _service.Get(search, page);
+            var models = await _service.Get(productId, page);
             if (models == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 

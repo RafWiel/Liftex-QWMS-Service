@@ -19,7 +19,7 @@ namespace WinService.Services
 
     public class OrdersService : BaseService, IOrdersService
     {
-        public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
+        public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();        
 
         public async Task<List<OrderListModel>?> Get(string? search, int? page)
         {

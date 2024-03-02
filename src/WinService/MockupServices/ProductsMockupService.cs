@@ -35,7 +35,6 @@ namespace WinService.Services
                     {
                         Id = i,
                         Code = $"T{i}",
-                        Name = $"Towar {i}",
                         Price = i * 10.1M,
                         Count = 1 * 2,
                         MeasureUnitDecimalPlaces = 3
@@ -44,9 +43,10 @@ namespace WinService.Services
 
                 return models
                     .Where(u =>
-                        string.IsNullOrEmpty(search) || (!string.IsNullOrEmpty(search) &&
-                            (u.Code.ToLower().Contains(search?.ToLower())) ||
-                            (u.Name.ToLower().Contains(search?.ToLower())))
+                        string.IsNullOrEmpty(search) || 
+                        (
+                            !string.IsNullOrEmpty(search) && (u.Code.ToLower().Contains(search?.ToLower()))
+                        )
                     )
                     .Skip(((page ?? 1) - 1) * 25)
                     .Take(25)

@@ -22,7 +22,7 @@ namespace WinService.Database
         public event LogDelegate LogError;
 
         private SqlConnection _sqlConn;
-        private StringBuilder _outputXml;
+        private StringBuilder _outputXml = new StringBuilder();
 
         #region Enums
 

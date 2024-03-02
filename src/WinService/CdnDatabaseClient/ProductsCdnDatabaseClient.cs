@@ -38,8 +38,7 @@ namespace WinService.Database
                 var commandText = @"
                     select 
                         a.Twr_GIDNumer as Id, 
-                        a.Twr_Kod as Code, 
-                        a.Twr_Nazwa as Name,                        
+                        a.Twr_Kod as Code,                                                
                         a.Twr_JmCalkowita as IsNatural,
                         a.Twr_JmFormat as DecimalPlaces,
                         c.Twc_Wartosc as Price,
@@ -85,8 +84,7 @@ namespace WinService.Database
                         a.Twr_Archiwalny = 0 and
                         @search is null or @search is not null and 
                         (
-                            a.Twr_Kod like + '%' + @search + '%' or 
-                            a.Twr_Nazwa like + '%' + @search + '%'
+                            a.Twr_Kod like + '%' + @search + '%' 
                         )
                     order by a.Twr_Kod asc   
                     offset (@skipCount) rows 
@@ -122,8 +120,7 @@ namespace WinService.Database
                             products.Add(new ProductListModel
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                Code = reader["Code"].ToString(),
-                                Name = reader["Name"].ToString(),
+                                Code = reader["Code"].ToString(),                                
                                 Count = Convert.ToDecimal(reader["Count"]),
                                 MeasureUnitDecimalPlaces = isNatural ? 0 : Convert.ToInt32(reader["DecimalPlaces"]),
                                 Price = Convert.ToDecimal(reader["Price"])
