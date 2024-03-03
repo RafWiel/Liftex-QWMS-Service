@@ -22,13 +22,18 @@ namespace WinService.Services
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
         
         public async Task<List<BarcodeListModel>?> Get(int productId, int? page)
-        {
+        {            
             var models = await Task.Run(() =>
             {
                 Thread.Sleep(2000);
                 var models = new List<BarcodeListModel>();
 
-                for (int i = 1; i <= 10; i++)
+                if (productId <= 0)
+                    return models.ToList();
+
+                int index = ((page ?? 1) - 1) * 10 + 1;
+
+                for (int i = index; i <= index + 10; i++)
                 {
                     models.Add(new BarcodeListModel()
                     {
