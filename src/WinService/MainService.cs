@@ -15,6 +15,7 @@ using System.Web.Http.SelfHost;
 using System.Web.Http.Routing;
 using WinService.Controllers;
 using WinService.Helpers;
+using WinService.Interfaces;
 
 namespace WinService
 {
@@ -31,7 +32,8 @@ namespace WinService
         private BarcodesService _barcodesService;
         private OrdersService _ordersService;
         private ProductsService _productsService;
-        
+        private ReservationsService _reservationsService;
+
         #endregion
 
         #region Methods
@@ -54,7 +56,8 @@ namespace WinService
                 InitializeBarcodesService();
                 InitializeOrdersService();
                 InitializeProductsService();
-                
+                InitializeReservationsService();
+
                 InitializeWebApiService();
             }
             catch (Exception ex)
@@ -72,6 +75,7 @@ namespace WinService
             _barcodesService.Stop();
             _ordersService.Stop();
             _productsService.Stop();
+            _reservationsService.Stop();
             
             _cdnApiService.Stop();            
         }
@@ -79,11 +83,12 @@ namespace WinService
         private void InitializeWebApiService()
         {
             _webApiService = new WebApiService
-            {
-                BarcodesService = _barcodesService,
-                OrdersService = _ordersService,
-                ProductsService = _productsService,
-            };
+            (
+                _barcodesService,
+                _ordersService,
+                _productsService,
+                _reservationsService
+            );
 
             _webApiService.Start();
         }
@@ -140,7 +145,21 @@ namespace WinService
 
             _productsService.LogEvent += LogEvent;
             _productsService.LogError += LogError;
-        }        
+        }
+
+        private void InitializeReservationsService()
+        {
+            _reservationsService = new ReservationsService
+            {
+                DatabaseConfiguration = _config.Database,
+                PropertiesConfiguration = _config.Properties
+            };
+
+            _reservationsService.Start();
+
+            _reservationsService.LogEvent += LogEvent;
+            _reservationsService.LogError += LogError;
+        }
 
         private void LogEvent(string message)
         {

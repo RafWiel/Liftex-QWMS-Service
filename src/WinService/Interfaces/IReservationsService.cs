@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QWMS.Models.Barcodes;
+using QWMS.Models.Reservations;
 
 namespace WinService.Interfaces
 {
     #nullable enable
 
-    public interface IBarcodesService
+    public interface IReservationsService
     {
-        Task<List<BarcodeListModel>?> Get(int productId, int? page);        
+        Task<List<ReservationListModel>?> Get(int productId, int? page);        
     }
 }

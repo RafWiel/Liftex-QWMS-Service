@@ -8,25 +8,40 @@ using System.Web.Http.SelfHost;
 using WinService.Controllers;
 using WinService.Helpers;
 using WinService.AppStart;
+using WinService.Interfaces;
 
 namespace WinService.Services
 {
-    public class WebApiService
+    public class WebApiService : IBaseService
     {       
         private HttpSelfHostServer _server;
 
-        public BarcodesService BarcodesService { get; set; }
-        public OrdersService OrdersService { get; set; }
-        public ProductsService ProductsService { get; set; }
+        private IBarcodesService _barcodesService;
+        private IOrdersService _ordersService;
+        private IProductsService _productsService;
+        private IReservationsService _reservationsService;
 
+        public WebApiService(
+            IBarcodesService barcodesService,
+            IOrdersService ordersService,
+            IProductsService productsService,
+            IReservationsService reservationsService)
+        {
+            _barcodesService = barcodesService;
+            _ordersService = ordersService;
+            _productsService = productsService;
+            _reservationsService = reservationsService;
+        }
+        
         public void Start()
         {
             var config = new HttpSelfHostConfiguration(WebApiConfiguration.Address);
 
             config.DependencyResolver = new OverriddenWebApiDependencyResolver(config.DependencyResolver)
-                .Add(typeof(BarcodesController), () => new BarcodesController(BarcodesService))
-                .Add(typeof(OrdersController), () => new OrdersController(OrdersService))            
-                .Add(typeof(ProductsController), () => new ProductsController(ProductsService));
+                .Add(typeof(BarcodesController), () => new BarcodesController(_barcodesService))
+                .Add(typeof(OrdersController), () => new OrdersController(_ordersService))            
+                .Add(typeof(ProductsController), () => new ProductsController(_productsService))
+                .Add(typeof(ReservationsController), () => new ReservationsController(_reservationsService));
 
             WebApiConfiguration.Register(config);
 

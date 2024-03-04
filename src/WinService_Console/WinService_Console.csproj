@@ -52,7 +52,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mockup|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Local Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -62,7 +62,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mockup|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Local Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>

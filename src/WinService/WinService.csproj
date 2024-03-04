@@ -50,7 +50,7 @@
     <Nullable>enable</Nullable>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mockup|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Local Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -59,7 +59,7 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mockup|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;MOCKUP</DefineConstants>
@@ -114,11 +114,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStart\WebApiConfiguration.cs" />
+    <Compile Include="CdnDatabaseClient\ReservationsCdnDatabaseClient.cs" />
     <Compile Include="CdnDatabaseClient\BarcodesCdnDatabaseClient.cs" />
     <Compile Include="Configuration\ApiConfiguration.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
     <Compile Include="Configuration\PropertiesConfiguration.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Controllers\BarcodesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
@@ -126,10 +128,14 @@
     <Compile Include="CdnDatabaseClient\ProductsCdnDatabaseClient.cs" />
     <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Helpers\OverridenWebApiDependencyResolver.cs" />
+    <Compile Include="Interfaces\IBaseService.cs" />
+    <Compile Include="Interfaces\IReservationsService.cs" />
     <Compile Include="Interfaces\IBarcodesService.cs" />
     <Compile Include="Interfaces\IProductsService.cs" />
     <Compile Include="Interfaces\IOrdersService.cs" />
+    <Compile Include="MockupServices\ReservationsMockupService.cs" />
     <Compile Include="MockupServices\BarcodesMockupService.cs" />
+    <Compile Include="Models\Reservations\ReservationListModel.cs" />
     <Compile Include="Models\IpcResponseModel.cs" />
     <Compile Include="Models\IpcRequestModel.cs" />
     <Compile Include="CdnApiClient\CdnApiClient.cs" />
@@ -137,12 +143,13 @@
     <Compile Include="CdnDatabaseClient\CdnDatabaseClient.cs" />
     <Compile Include="CdnApiClient\OrdersCdnApiClient.cs" />
     <Compile Include="Models\Products\ProductDetailsCountModel.cs" />
-    <Compile Include="Models\Products\BarcodeListModel.cs" />
+    <Compile Include="Models\Barcodes\BarcodeListModel.cs" />
     <Compile Include="Models\Products\ProductListModel.cs" />
     <Compile Include="Models\Products\ProductDetailsModel.cs" />
     <Compile Include="Models\Orders\OrderListModel.cs" />
     <Compile Include="MockupServices\OrdersMockupService.cs" />
     <Compile Include="MockupServices\ProductsMockupService.cs" />
+    <Compile Include="Services\ReservationsService.cs" />
     <Compile Include="Services\CdnApiService.cs" />
     <Compile Include="CdnApiServices\OrdersCdnApiService.cs" />
     <Compile Include="Services\BarcodesService.cs" />

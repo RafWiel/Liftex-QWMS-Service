@@ -9,8 +9,9 @@ namespace WinService.Interfaces
 {
     #nullable enable
 
-    public interface IBarcodesService
-    {
-        Task<List<BarcodeListModel>?> Get(int productId, int? page);        
+    public interface IBaseService
+    {        
+        void Start();
+        void Stop();
     }
 }

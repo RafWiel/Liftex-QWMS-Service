@@ -36,7 +36,14 @@ namespace WinService.AppStart
             {
                 controller = "Products",
                 action = "GetSingle"
-            })));            
+            })));
+
+            config.Routes.Add("Reservations", new HttpRoute("api/v1/reservations", new HttpRouteValueDictionary(new
+            {
+                controller = "Reservations",
+                action = "Get"
+            })));
+
         }
     }
 }

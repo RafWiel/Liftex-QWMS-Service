@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,8 @@ using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
 using QWMS.Models.Orders;
+
+#nullable enable
 
 namespace WinService.Services
 {

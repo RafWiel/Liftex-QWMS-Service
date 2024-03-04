@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
-using QWMS.Models.Barcodes;
+using QWMS.Models.Reservations;
 
 namespace WinService.Services
 {
     #if !MOCKUP
 
-    public class BarcodesService : BaseService, IBarcodesService
+    public class ReservationsService : BaseService, IReservationsService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
-        
-        public async Task<List<BarcodeListModel>?> Get(int productId, int? page)
+        public PropertiesConfiguration PropertiesConfiguration { get; set; } = new PropertiesConfiguration();
+
+        public async Task<List<ReservationListModel>?> Get(int productId, int? page)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace WinService.Services
                 {
                     db.LogError += InvokeLogError;
 
-                    return await db.GetBarcodes(productId, page);
+                    return await db.GetReservations(productId, PropertiesConfiguration.WarehouseId, page);
                 }
             }
             catch (Exception ex)
@@ -38,7 +39,7 @@ namespace WinService.Services
             }
 
             return null;
-        }        
+        }              
     }
 
     #endif
