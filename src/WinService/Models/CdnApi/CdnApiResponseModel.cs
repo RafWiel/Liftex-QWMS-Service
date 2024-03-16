@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinService.Models
 {
-    public class IpcResponseModel
+    public class CdnApiResponseModel
     {
         public int? Id { get; set; }
         public int ErrorCode { get; set; }        

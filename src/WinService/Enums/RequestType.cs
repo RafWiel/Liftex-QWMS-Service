@@ -8,13 +8,8 @@ namespace WinService.Enums
 {
     public enum RequestType
     {
-        AddOrder = 1,        
-        AddContractor = 2,
-        AddContractorAddress = 3,
-        DeleteContractorAddress = 4,
-        AddDocument = 5,
-        AddInvoiceToReceiptDocument = 6,
-        AddCorrectionDocument = 7,
-        AddComplaint = 8,
+        AddOrder = 1,
+        AddTestOrder = 2,
+        
     }
 }

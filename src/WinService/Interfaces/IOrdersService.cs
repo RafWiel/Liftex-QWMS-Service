@@ -11,5 +11,6 @@ namespace WinService.Interfaces
     public interface IOrdersService
     {
         Task<List<OrderListModel>?> Get(string? search, int? page);
+        Task<bool> Test(OrderTestModel model);
     }
 }

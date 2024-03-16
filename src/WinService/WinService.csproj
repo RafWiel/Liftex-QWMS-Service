@@ -135,9 +135,10 @@
     <Compile Include="Interfaces\IOrdersService.cs" />
     <Compile Include="MockupServices\ReservationsMockupService.cs" />
     <Compile Include="MockupServices\BarcodesMockupService.cs" />
+    <Compile Include="Models\Orders\OrderTestModel.cs" />
     <Compile Include="Models\Reservations\ReservationListModel.cs" />
-    <Compile Include="Models\IpcResponseModel.cs" />
-    <Compile Include="Models\IpcRequestModel.cs" />
+    <Compile Include="Models\CdnApi\CdnApiResponseModel.cs" />
+    <Compile Include="Models\CdnApi\CdnApiRequestModel.cs" />
     <Compile Include="CdnApiClient\CdnApiClient.cs" />
     <Compile Include="Helpers\CdnApiErrors.cs" />
     <Compile Include="CdnDatabaseClient\CdnDatabaseClient.cs" />

@@ -17,61 +17,64 @@ namespace WinService.ApiServices
         public ApiConfiguration ApiConfiguration { get; set; }
         public DatabaseConfiguration DatabaseConfiguration { get; set; }
 
-        //public bool ProcessRequest(Models.IpcRequestModel request)
-        //{
-        //    if (request.Type != Enums.RequestType.AddOrder)
-        //        return false;
+        public bool ProcessRequest(Models.IpcRequestModel request)
+        {
+            if (request.Type != Enums.RequestType.AddTestOrder)
+                return false;
 
-        //    int documentId = 0;
+            try
+            {
+                if (Api.IsLoggedIn == false)
+                    Api.Login(ApiConfiguration.KeyServer, ApiConfiguration.DatabaseName, ApiConfiguration.User, ApiConfiguration.Password);
 
-        //    try
-        //    {
-        //        if (Api.IsLoggedIn == false)
-        //            Api.Login(ApiConfiguration.KeyServer, ApiConfiguration.DatabaseName, ApiConfiguration.User, ApiConfiguration.Password);                
+                if (request.Type == Enums.RequestType.AddTestOrder)
+                    AddTestOrder(request);                
+            }
+            catch (Exception ex)
+            {
+                InvokeLogError(ex.Message);
+            }
+            finally
+            {
+                request.ProcessedEvent.Set();
+            }
 
-        //        using (var db = new DatabaseClient(DatabaseConfiguration))
-        //        {
-        //            db.LogError += InvokeLogError;
+            return true;
+        }       
 
-        //            bool result = AddHeader(request, db, ref documentId);
-        //            if (!result)
-        //                return true;
+        private void AddTestOrder(Models.IpcRequestModel request)
+        {
+            int documentId = 0;
 
-        //            result = AddItems(request, db, documentId);
-        //            if (!result)
-        //                return true;
-        //        }
+            using (var db = new CdnDatabaseClient(DatabaseConfiguration))
+            {
+                db.LogError += InvokeLogError;
 
-        //        CloseDocument(request, documentId);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        InvokeLogError(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        request.ProcessedEvent.Set();
-        //    }
+                bool result = AddTestHeader(request, db, ref documentId);
+                if (!result)
+                    return;
 
-        //    return true;
-        //}
+                result = AddTestItems(request, db, documentId);
+                if (!result)
+                    return;
+            }
 
-        //private bool AddHeader(Models.IpcRequestModel request, DatabaseClient database, ref int documentId)
-        //{
-        //    if (!ValidateContractors(request, database))
-        //        return false;
+            CloseTestDocument(request, documentId);
+        }
 
-        //    var errorMessage = string.Empty;
+        private bool AddTestHeader(Models.IpcRequestModel request, CdnDatabaseClient database, ref int documentId)
+        {            
+            var errorMessage = string.Empty;
 
-        //    int result = Api.AddOrder((InterProcessCommunication.Models.OrderRequestModel)request.WebRequest, ref documentId, ref errorMessage);
-        //    if (result != 0)
-        //    {
-        //        SetErrorResponse(request, result, errorMessage);
-        //        return false;
-        //    }
+            int result = Api.AddTestOrder(ref documentId, ref errorMessage);
+            if (result != 0)
+            {
+                SetErrorResponse(request, result, errorMessage);
+                return false;
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
 
         //private bool AddItems(Models.IpcRequestModel request, DatabaseClient database, int documentId)
         //{

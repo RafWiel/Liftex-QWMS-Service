@@ -53,6 +53,15 @@ namespace WinService.Services
 
             return models;
         }
+
+        public async Task<bool> Test(OrderTestModel model)
+        {
+            return await Task.Run(() => {
+                var x = model.Id;
+
+                return true;
+            });
+        }
     }
 
     #endif

@@ -8,7 +8,7 @@ using WinService.Enums;
 
 namespace WinService.Models
 {
-    public class IpcRequestModel
+    public class CdnApiRequestModel
     {
         public Guid Id { get; set; }
         public ManualResetEvent ProcessedEvent { get; set; }

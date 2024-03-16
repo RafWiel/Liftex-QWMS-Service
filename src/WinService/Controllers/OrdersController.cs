@@ -1,4 +1,5 @@
-﻿ using System;
+﻿using QWMS.Models.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -31,6 +32,17 @@ namespace WinService.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Data not found");
 
             return Request.CreateResponse(HttpStatusCode.OK, models);
+        }
+
+        [HttpPost]
+        [Route("api/v1/orders/test")]
+        public async Task<HttpResponseMessage> Test(OrderTestModel model)
+        {
+            var result = await _service.Test(model);
+            if (!result)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Something went wrong");
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

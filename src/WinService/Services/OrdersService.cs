@@ -15,7 +15,7 @@ using QWMS.Models.Orders;
 
 namespace WinService.Services
 {
-    #if !MOCKUP
+#if !MOCKUP
 
     public class OrdersService : BaseService, IOrdersService
     {
@@ -49,7 +49,12 @@ namespace WinService.Services
 
             //return models;
         }
+
+        public async Task<bool> Test(OrderTestModel model)
+        {
+            return await Task.Run(() => true);
+        }
     }
 
-    #endif
+#endif
 }

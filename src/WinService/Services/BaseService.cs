@@ -40,7 +40,19 @@ namespace WinService.Services
         protected void InvokeLogEvent(string message)
         {
             LogEvent?.Invoke(message);
-        }        
+        }
+
+        protected void SetErrorResponse(Models.IpcRequestModel request, int errorCode, string errorMessage)
+        {
+            InvokeLogError(errorMessage);
+
+            request.Response = new IpcResponseModel
+            {
+                ErrorCode = errorCode,
+                ErrorMessage = errorMessage.Replace(": BŁĘDY:|", string.Empty).Replace("BŁĘDY:|", string.Empty)
+            };
+        }
+
 
         #endregion
     }

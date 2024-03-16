@@ -17,70 +17,70 @@ namespace WinService.CdnApi
             ZS = 6
         }
 
-        //public int AddOrder(OrderRequestModel model, ref int documentId, ref string errorMessage)
-        //{
-        //    int result = ResultException;
+        public int AddTestOrder(ref int documentId, ref string errorMessage)
+        {
+            int result = ResultException;
 
-        //    int creationDate = model.Date?.Creation > DateTime.MinValue ? ConvertToClarionDate(model.Date.Creation) : ConvertToClarionDate(DateTime.Now);
-        //    int realizationDate = model.Date?.Realization > DateTime.MinValue ? ConvertToClarionDate(model.Date.Realization) : 0;
-        //    int expirationDate = model.Date?.Expiration > DateTime.MinValue ? ConvertToClarionDate(model.Date.Expiration) : 0;
+            int creationDate = model.Date?.Creation > DateTime.MinValue ? ConvertToClarionDate(model.Date.Creation) : ConvertToClarionDate(DateTime.Now);
+            int realizationDate = model.Date?.Realization > DateTime.MinValue ? ConvertToClarionDate(model.Date.Realization) : 0;
+            int expirationDate = model.Date?.Expiration > DateTime.MinValue ? ConvertToClarionDate(model.Date.Expiration) : 0;
 
-        //    try
-        //    {
-        //        var doc = new XLDokumentZamNagInfo_20232
-        //        {
-        //            Wersja = ApiVersion,
-        //            Tryb = 2, //wsadowy
-        //            Typ = model.DocumentType == 1 ? (int)OrderType.ZS : (int)OrderType.ZZ,
-        //            FormaPl = model.Payment?.Type > 0 ? model.Payment.Type : 20,
-        //            Akronim = model.Contractor.Main,
-        //            AkronimDocelowego = model.Contractor.Target ?? string.Empty,
-        //            DokumentObcy = model.Name ?? string.Empty,
-        //            DataWystawienia = creationDate,
-        //            DataRealizacji = realizationDate,
-        //            DataWaznosci = expirationDate,
-        //            FlagaNB = "N",
-        //            RezerwujZasoby = -1, //z definicji dokumentu
-        //            TerminPlatnosci = model.Payment?.Delay ?? 0,
-        //            Opis = model.Description,
-        //            Waluta = model.Payment?.Currency ?? string.Empty,
-        //            ExpoNorm = model.Contractor.ExpoNorm,
-        //            Magazyn = model.WarehouseCode,
-        //            SposobDst = model.DeliveryMethod,
-        //            ZamSeria = model.Series ?? string.Empty,
-        //        };
+            try
+            {
+                var doc = new XLDokumentZamNagInfo_20232
+                {
+                    Wersja = ApiVersion,
+                    Tryb = 2, //wsadowy
+                    Typ = model.DocumentType == 1 ? (int)OrderType.ZS : (int)OrderType.ZZ,
+                    FormaPl = model.Payment?.Type > 0 ? model.Payment.Type : 20,
+                    Akronim = model.Contractor.Main,
+                    AkronimDocelowego = model.Contractor.Target ?? string.Empty,
+                    DokumentObcy = model.Name ?? string.Empty,
+                    DataWystawienia = creationDate,
+                    DataRealizacji = realizationDate,
+                    DataWaznosci = expirationDate,
+                    FlagaNB = "N",
+                    RezerwujZasoby = -1, //z definicji dokumentu
+                    TerminPlatnosci = model.Payment?.Delay ?? 0,
+                    Opis = model.Description,
+                    Waluta = model.Payment?.Currency ?? string.Empty,
+                    ExpoNorm = model.Contractor.ExpoNorm,
+                    Magazyn = model.WarehouseCode,
+                    SposobDst = model.DeliveryMethod,
+                    ZamSeria = model.Series ?? string.Empty,
+                };
 
-        //        if (model.Contractor.PayerId > 0)
-        //        {
-        //            doc.KnPNumer = model.Contractor.PayerId;
-        //            doc.KnPTyp = (int)DatabaseClient.ObjectType.Contractor;
-        //        }
+                if (model.Contractor.PayerId > 0)
+                {
+                    doc.KnPNumer = model.Contractor.PayerId;
+                    doc.KnPTyp = (int)DatabaseClient.ObjectType.Contractor;
+                }
 
-        //        if (model.ShippingAddressId > 0)
-        //        {
-        //            doc.AdwNumer = model.ShippingAddressId;
-        //            doc.AdwTyp = (int)DatabaseClient.ObjectType.ShippingAddress;
-        //        }
+                if (model.ShippingAddressId > 0)
+                {
+                    doc.AdwNumer = model.ShippingAddressId;
+                    doc.AdwTyp = (int)DatabaseClient.ObjectType.ShippingAddress;
+                }
 
-        //        result = cdn_api.cdn_api.XLNowyDokumentZam(_sessionId, ref documentId, doc);
-        //        if (result != 0)
-        //        {
-        //            errorMessage = GetErrorDescription(ErrorType.NowyDokumentZam, result);
-        //            var message = $"XLNowyDokumentZam: {result} - {errorMessage}";
+                result = cdn_api.cdn_api.XLNowyDokumentZam(_sessionId, ref documentId, doc);
+                if (result != 0)
+                {
+                    errorMessage = GetErrorDescription(ErrorType.NowyDokumentZam, result);
+                    var message = $"XLNowyDokumentZam: {result} - {errorMessage}";
 
-        //            LogErrorEvent?.Invoke(message);
+                    LogErrorEvent?.Invoke(message);
 
-        //            return result;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogErrorEvent?.Invoke(ex.Message);
-        //        gLog.Write(ex.ToString());
-        //    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogErrorEvent?.Invoke(ex.Message);
+                gLog.Write(ex.ToString());
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
 
         //public int AddOrderItem(OrderItemModel model, int documentId, ref string errorMessage)
         //{
