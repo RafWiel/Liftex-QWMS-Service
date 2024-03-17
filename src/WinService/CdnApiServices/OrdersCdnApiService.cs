@@ -17,7 +17,7 @@ namespace WinService.ApiServices
         public ApiConfiguration ApiConfiguration { get; set; }
         public DatabaseConfiguration DatabaseConfiguration { get; set; }
 
-        public bool ProcessRequest(Models.IpcRequestModel request)
+        public bool ProcessRequest(Models.CdnApiRequestModel request)
         {
             if (request.Type != Enums.RequestType.AddTestOrder)
                 return false;
@@ -42,7 +42,7 @@ namespace WinService.ApiServices
             return true;
         }       
 
-        private void AddTestOrder(Models.IpcRequestModel request)
+        private void AddTestOrder(Models.CdnApiRequestModel request)
         {
             int documentId = 0;
 
@@ -59,10 +59,10 @@ namespace WinService.ApiServices
                     return;
             }
 
-            CloseTestDocument(request, documentId);
+            CloseTestOrder(request, documentId);
         }
 
-        private bool AddTestHeader(Models.IpcRequestModel request, CdnDatabaseClient database, ref int documentId)
+        private bool AddTestHeader(Models.CdnApiRequestModel request, CdnDatabaseClient database, ref int documentId)
         {            
             var errorMessage = string.Empty;
 
@@ -76,106 +76,43 @@ namespace WinService.ApiServices
             return true;
         }
 
-        //private bool AddItems(Models.IpcRequestModel request, DatabaseClient database, int documentId)
-        //{
-        //    var errorMessage = string.Empty;
+        private bool AddTestItems(Models.CdnApiRequestModel request, CdnDatabaseClient database, int documentId)
+        {
+            var errorMessage = string.Empty;
+                
+            var result = Api.AddTestOrderItem(documentId, ref errorMessage);
+            if (result != 0)
+            {
+                //anuluj dokument
+                Api.CloseTestOrder(true, ref documentId, ref errorMessage);
 
-        //    foreach (var item in ((InterProcessCommunication.Models.OrderRequestModel)request.WebRequest).Items)
-        //    {
-        //        //var unitParameters = db.GetUnitParameters(item);
+                SetErrorResponse(request, result, errorMessage);             
+            }
+            
+            //wystapil blad pozycji towaru
+            if (request.Response != null)
+                return false;
 
-        //        var result = Api.AddOrderItem(item, documentId, ref errorMessage);
-        //        if (result != 0)
-        //        {
-        //            //anuluj dokument
-        //            Api.CloseOrder(true, ref documentId, ref errorMessage);
+            return true;
+        }
 
-        //            SetErrorResponse(request, result, errorMessage);
-        //            break;
-        //        }
-        //    }
+        private bool CloseTestOrder(Models.CdnApiRequestModel request, int documentId)
+        {
+            var errorMessage = string.Empty;
 
-        //    //wystapil blad pozycji towaru
-        //    if (request.Response != null)
-        //        return false;
+            var result = Api.CloseTestOrder(false, ref documentId, ref errorMessage);
+            if (result != 0)
+            {
+                SetErrorResponse(request, result, errorMessage);
+                return false;
+            }
 
-        //    return true;
-        //}
+            request.Response = new CdnApiResponseModel
+            {
+                Id = documentId
+            };
 
-        //private bool CloseDocument(Models.IpcRequestModel request, int documentId)
-        //{
-        //    var errorMessage = string.Empty;
-
-        //    var result = Api.CloseOrder(false, ref documentId, ref errorMessage);
-        //    if (result != 0)
-        //    {
-        //        SetErrorResponse(request, result, errorMessage);
-        //        return false;
-        //    }
-
-        //    request.Response = new IpcResponseModel
-        //    {
-        //        Id = documentId
-        //    };
-
-        //    return true;
-        //}
-
-        //private bool ValidateContractors(Models.IpcRequestModel request, DatabaseClient database)
-        //{
-        //    var webRequest = (InterProcessCommunication.Models.OrderRequestModel)request.WebRequest;
-
-        //    if (!ValidateContractor(request, database, webRequest.Contractor.Main))
-        //        return false;
-
-        //    if (!ValidateContractor(request, database, webRequest.Contractor.Target))
-        //        return false;
-
-        //    if (!ValidateContractor(request, database, webRequest.Contractor.Payer, true))
-        //        return false;
-
-        //    GetContractorExpoNorm(request, database);
-
-        //    return true;
-        //}
-
-        //private bool ValidateContractor(Models.IpcRequestModel request, DatabaseClient database, string code, bool isPayer = false)
-        //{
-        //    if (string.IsNullOrEmpty(code))
-        //        return true;
-
-        //    var id = database.GetContractorId(code);
-        //    if (id == 0)
-        //    {
-        //        SetErrorResponse(request, 285, $"Nie znaleziono kontrahenta {code}");
-        //        return false;
-        //    }
-
-        //    if (isPayer)
-        //        ((InterProcessCommunication.Models.OrderRequestModel)request.WebRequest).Contractor.PayerId = id;
-
-        //    return true;
-        //}
-
-        //private void GetContractorExpoNorm(Models.IpcRequestModel request, DatabaseClient database)
-        //{
-        //    var webRequest = (InterProcessCommunication.Models.OrderRequestModel)request.WebRequest;
-        //    var expoNorm = database.GetContractorExpoNorm(webRequest.Contractor.Main);
-
-        //    switch (expoNorm)
-        //    {
-        //        case 2: //unijny
-        //            expoNorm = 6; //transakcja wewnatrzwspolnotowa
-        //            break;
-        //        case 3: //pozaunijny
-        //            expoNorm = 1; //transakcja inna zagraniczna
-        //            break;
-        //        default:
-        //            expoNorm = 0; //transakcja krajowa
-        //            break;
-        //    }
-
-        //    ((InterProcessCommunication.Models.OrderRequestModel)request.WebRequest).Contractor.ExpoNorm = expoNorm;
-        //}        
+            return true;
+        }            
     }
 }

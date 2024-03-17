@@ -14,6 +14,6 @@ namespace WinService.Models
         public ManualResetEvent ProcessedEvent { get; set; }
         public object WebRequest { get; set; }
         public RequestType Type { get; set; }
-        public IpcResponseModel Response { get; set; }
+        public CdnApiResponseModel Response { get; set; }
     }    
 }

@@ -42,11 +42,11 @@ namespace WinService.Services
             LogEvent?.Invoke(message);
         }
 
-        protected void SetErrorResponse(Models.IpcRequestModel request, int errorCode, string errorMessage)
+        protected void SetErrorResponse(Models.CdnApiRequestModel request, int errorCode, string errorMessage)
         {
             InvokeLogError(errorMessage);
 
-            request.Response = new IpcResponseModel
+            request.Response = new CdnApiResponseModel
             {
                 ErrorCode = errorCode,
                 ErrorMessage = errorMessage.Replace(": BŁĘDY:|", string.Empty).Replace("BŁĘDY:|", string.Empty)

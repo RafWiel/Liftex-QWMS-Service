@@ -124,7 +124,8 @@ namespace WinService
         {
             _ordersService = new OrdersService
             {
-                DatabaseConfiguration = _config.Database,                
+                DatabaseConfiguration = _config.Database,
+                Requests = _cdnApiService.Requests,
             };
 
             _ordersService.Start();

@@ -39,10 +39,10 @@ namespace WinService.Controllers
         public async Task<HttpResponseMessage> Test(OrderTestModel model)
         {
             var result = await _service.Test(model);
-            if (!result)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Something went wrong");
+            if (result.Status != HttpStatusCode.OK)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, result.JsonData);
         }
     }
 }

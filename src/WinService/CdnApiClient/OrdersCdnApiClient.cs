@@ -21,47 +21,31 @@ namespace WinService.CdnApi
         {
             int result = ResultException;
 
-            int creationDate = model.Date?.Creation > DateTime.MinValue ? ConvertToClarionDate(model.Date.Creation) : ConvertToClarionDate(DateTime.Now);
-            int realizationDate = model.Date?.Realization > DateTime.MinValue ? ConvertToClarionDate(model.Date.Realization) : 0;
-            int expirationDate = model.Date?.Expiration > DateTime.MinValue ? ConvertToClarionDate(model.Date.Expiration) : 0;
+            int creationDate = ConvertToClarionDate(DateTime.Now);
+            int realizationDate = ConvertToClarionDate(DateTime.Now);
+            int expirationDate = ConvertToClarionDate(DateTime.Now);
 
             try
             {
+#if DEBUG
+                var contractorCode = "K1";
+                var description = "Test QWMS";                
+#endif
                 var doc = new XLDokumentZamNagInfo_20232
                 {
                     Wersja = ApiVersion,
                     Tryb = 2, //wsadowy
-                    Typ = model.DocumentType == 1 ? (int)OrderType.ZS : (int)OrderType.ZZ,
-                    FormaPl = model.Payment?.Type > 0 ? model.Payment.Type : 20,
-                    Akronim = model.Contractor.Main,
-                    AkronimDocelowego = model.Contractor.Target ?? string.Empty,
-                    DokumentObcy = model.Name ?? string.Empty,
+                    Typ = (int)OrderType.ZS,
+                    FormaPl = 20,
+                    Akronim = contractorCode,
                     DataWystawienia = creationDate,
                     DataRealizacji = realizationDate,
                     DataWaznosci = expirationDate,
                     FlagaNB = "N",
                     RezerwujZasoby = -1, //z definicji dokumentu
-                    TerminPlatnosci = model.Payment?.Delay ?? 0,
-                    Opis = model.Description,
-                    Waluta = model.Payment?.Currency ?? string.Empty,
-                    ExpoNorm = model.Contractor.ExpoNorm,
-                    Magazyn = model.WarehouseCode,
-                    SposobDst = model.DeliveryMethod,
-                    ZamSeria = model.Series ?? string.Empty,
+                    Opis = description,                    
                 };
-
-                if (model.Contractor.PayerId > 0)
-                {
-                    doc.KnPNumer = model.Contractor.PayerId;
-                    doc.KnPTyp = (int)DatabaseClient.ObjectType.Contractor;
-                }
-
-                if (model.ShippingAddressId > 0)
-                {
-                    doc.AdwNumer = model.ShippingAddressId;
-                    doc.AdwTyp = (int)DatabaseClient.ObjectType.ShippingAddress;
-                }
-
+                
                 result = cdn_api.cdn_api.XLNowyDokumentZam(_sessionId, ref documentId, doc);
                 if (result != 0)
                 {
@@ -82,92 +66,82 @@ namespace WinService.CdnApi
             return result;
         }
 
-        //public int AddOrderItem(OrderItemModel model, int documentId, ref string errorMessage)
-        //{
-        //    int result = ResultException;
+        public int AddTestOrderItem(int documentId, ref string errorMessage)
+        {
+            int result = ResultException;
 
-        //    try
-        //    {
-        //        var doc = new XLDokumentZamElemInfo_20232
-        //        {
-        //            Wersja = ApiVersion,
-        //            Towar = model.Code,
-        //            Ilosc = model.Count.ToString(),
-        //            CenaKatalogowa = (model.Price >= 0) ? model.Price.ToString() : string.Empty,
-        //            CenaSpr = model.PriceOrdinalId, //0 - domyslna dla kontrahenta
-        //            Rabat = (model.Discount >= 0) ? model.Discount.ToString() : string.Empty,
-        //            Waluta = model.Currency,
-        //            Cecha = model.Feature,
-        //        };
+            try
+            {
+#if DEBUG
+                var code = "T1";                
+#endif
 
-        //        //if (unit != null)
-        //        //{
-        //        //    doc.Ilosc = (item.Count * unit.Numerator / unit.Denominator).ToString();
-        //        //    doc.JmZ = unit.Name;
-        //        //    doc.PrzeliczL = unit.Numerator;
-        //        //    doc.PrzeliczM = unit.Denominator;
-        //        //    doc.TypJm = 1; //dziesietny
-        //        //    doc.IgnorujJmTwr = 1;
-        //        //}
+                var doc = new XLDokumentZamElemInfo_20232
+                {
+                    Wersja = ApiVersion,
+                    Towar = code,
+                    Ilosc = "1",
+                    CenaSpr = 0, //0 - domyslna dla kontrahenta                    
+                };
 
-        //        result = cdn_api.cdn_api.XLDodajPozycjeZam(documentId, doc);
-        //        if (result != 0)
-        //        {
-        //            errorMessage = $"{model.Code} - {GetErrorDescription(ErrorType.DodajPozycjeZam, result)}";
-        //            var message = $"XLDodajPozycjeZam: {result} - Error: {errorMessage}";
+                result = cdn_api.cdn_api.XLDodajPozycjeZam(documentId, doc);
+                if (result != 0)
+                {
+                    errorMessage = $"{code} - {GetErrorDescription(ErrorType.DodajPozycjeZam, result)}";
+                    var message = $"XLDodajPozycjeZam: {result} - Error: {errorMessage}";
 
-        //            LogErrorEvent?.Invoke(message);
+                    LogErrorEvent?.Invoke(message);
 
-        //            return result;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogErrorEvent?.Invoke(ex.Message);
-        //        gLog.Write(ex.ToString());
-        //    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogErrorEvent?.Invoke(ex.Message);
+                gLog.Write(ex.ToString());
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
 
-        //public int CloseOrder(bool error, ref int documentId, ref string errorMessage)
-        //{
-        //    int result = ResultException;
+        public int CloseTestOrder(bool error, ref int documentId, ref string errorMessage)
+        {
+            int result = ResultException;
 
-        //    try
-        //    {
-        //        int save = 0;
-        //        int delete = 1;
-        //        int confirm = 2;
+            try
+            {
+                int save = 0;
+                int delete = 1;
+                int confirm = 2;
 
-        //        bool saveToBuffer = true;// order.IsPayed == false;
+                bool saveToBuffer = true;// order.IsPayed == false;
 
-        //        var doc = new XLZamkniecieDokumentuZamInfo_20232
-        //        {
-        //            Wersja = ApiVersion,
-        //            TrybZamkniecia = error ? delete : (saveToBuffer ? save : confirm)
-        //        };
+                var doc = new XLZamkniecieDokumentuZamInfo_20232
+                {
+                    Wersja = ApiVersion,
+                    TrybZamkniecia = error ? delete : (saveToBuffer ? save : confirm)
+                };
 
-        //        result = cdn_api.cdn_api.XLZamknijDokumentZam(documentId, doc);
-        //        if (result != 0)
-        //        {
-        //            errorMessage = GetErrorDescription(ErrorType.ZamknijDokumentZam, result);
-        //            var message = $"XLZamknijDokumentZam: {result} - {errorMessage}";
+                result = cdn_api.cdn_api.XLZamknijDokumentZam(documentId, doc);
+                if (result != 0)
+                {
+                    errorMessage = GetErrorDescription(ErrorType.ZamknijDokumentZam, result);
+                    var message = $"XLZamknijDokumentZam: {result} - {errorMessage}";
 
-        //            LogErrorEvent?.Invoke(message);
+                    LogErrorEvent?.Invoke(message);
 
-        //            documentId = -1;
-        //        }
+                    documentId = -1;
+                }
 
-        //        documentId = doc.ZamNumer;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogErrorEvent?.Invoke(ex.Message);
-        //        gLog.Write(ex.ToString());
-        //    }
+                documentId = doc.ZamNumer;
+            }
+            catch (Exception ex)
+            {
+                LogErrorEvent?.Invoke(ex.Message);
+                gLog.Write(ex.ToString());
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
     }
 }

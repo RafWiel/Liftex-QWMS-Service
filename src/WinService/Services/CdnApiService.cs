@@ -25,7 +25,7 @@ namespace WinService.Services
         public ApiConfiguration ApiConfiguration { get; set; }        
         public DatabaseConfiguration DatabaseConfiguration { get; set; }
 
-        public Queue<Models.IpcRequestModel> Requests { get; private set; } = new Queue<Models.IpcRequestModel>();        
+        public Queue<Models.CdnApiRequestModel> Requests { get; private set; } = new Queue<Models.CdnApiRequestModel>();        
         
         private OrdersCdnApiService _ordersService;
         //private DocumentsApiService _documentsService;
@@ -85,8 +85,8 @@ namespace WinService.Services
 
                     var request = Requests.Dequeue();
 
-                    //if (_ordersService.ProcessRequest(request))
-                    //    continue;
+                    if (_ordersService.ProcessRequest(request))
+                        continue;
 
                     //if (_documentsService.ProcessRequest(request))
                     //    continue;
