@@ -9,7 +9,8 @@ namespace WinService.Enums
     public enum RequestType
     {
         AddOrder = 1,
-        AddTestOrder = 2,
-        
+        TestAddOrderHeader = 11,
+        TestAddOrderItems = 12,
+        TestCloseOrder = 13,
     }
 }

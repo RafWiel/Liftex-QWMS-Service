@@ -179,7 +179,8 @@ namespace WinService
             }
 
             _monitorWcfClient.LogError(message);
-            gLog.Write(message);
+            
+            //gLog.Write(message);
         }
 
         #endregion

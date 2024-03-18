@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,7 +11,7 @@ namespace WinService.Models
     public class HttpResponseModel
     {        
         public HttpStatusCode Status { get; set; }        
-        public string JsonData { get; set; }
+        public object Content { get; set; }
         public string ErrorMessage { get; set; }
 
         public HttpResponseModel(HttpStatusCode status)
@@ -24,10 +25,10 @@ namespace WinService.Models
             ErrorMessage = errorMessage;
         }
 
-        public HttpResponseModel(string jsonData)
+        public HttpResponseModel(object content)
         {
             Status = HttpStatusCode.OK;
-            JsonData = jsonData;
+            Content = content;
         }
     }
 }

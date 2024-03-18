@@ -59,6 +59,7 @@ namespace WinService.CdnApi
             }
             catch (Exception ex)
             {
+                errorMessage = ex.Message;
                 LogErrorEvent?.Invoke(ex.Message);
                 gLog.Write(ex.ToString());
             }
@@ -97,6 +98,7 @@ namespace WinService.CdnApi
             }
             catch (Exception ex)
             {
+                errorMessage = ex.Message;
                 LogErrorEvent?.Invoke(ex.Message);
                 gLog.Write(ex.ToString());
             }
@@ -137,6 +139,7 @@ namespace WinService.CdnApi
             }
             catch (Exception ex)
             {
+                errorMessage = ex.Message;
                 LogErrorEvent?.Invoke(ex.Message);
                 gLog.Write(ex.ToString());
             }

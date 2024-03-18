@@ -11,6 +11,8 @@ using WinService.Configuration;
 using WinService.Database;
 using WinService.Interfaces;
 using QWMS.Models.Orders;
+using WinService.Models;
+using WinService.DataTransferObjects;
 
 #nullable enable
 
@@ -18,7 +20,7 @@ namespace WinService.Services
 {
     #if MOCKUP
 
-    public class OrdersService : BaseService, IOrdersService
+    public class OrdersService : BaseRequestsService, IOrdersService
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();        
 
@@ -54,14 +56,19 @@ namespace WinService.Services
             return models;
         }
 
-        public async Task<bool> Test(OrderTestModel model)
-        {
+        public async Task<HttpResponseModel> TestAddHeader()
+        {            
             return await Task.Run(() => {
-                var x = model.Id;
+                Thread.Sleep(1000);
 
-                return true;
+                var dto = new IdResponseDto
+                {
+                    Id = 121
+                };
+
+                return new HttpResponseModel(dto);
             });
-        }
+        }        
     }
 
     #endif

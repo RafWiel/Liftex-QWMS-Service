@@ -126,6 +126,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="CdnDatabaseClient\OrdersCdnDatabaseClient.cs" />
     <Compile Include="CdnDatabaseClient\ProductsCdnDatabaseClient.cs" />
+    <Compile Include="DataTransferObjects\IdResponseDto.cs" />
     <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Helpers\OverridenWebApiDependencyResolver.cs" />
     <Compile Include="Interfaces\IBaseService.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="MockupServices\ReservationsMockupService.cs" />
     <Compile Include="MockupServices\BarcodesMockupService.cs" />
     <Compile Include="Models\HttpResponseModel.cs" />
-    <Compile Include="Models\Orders\OrderTestModel.cs" />
     <Compile Include="Models\Reservations\ReservationListModel.cs" />
     <Compile Include="Models\CdnApi\CdnApiResponseModel.cs" />
     <Compile Include="Models\CdnApi\CdnApiRequestModel.cs" />

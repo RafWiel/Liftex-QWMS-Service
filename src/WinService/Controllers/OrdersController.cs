@@ -35,14 +35,14 @@ namespace WinService.Controllers
         }
 
         [HttpPost]
-        [Route("api/v1/orders/test")]
-        public async Task<HttpResponseMessage> Test(OrderTestModel model)
+        [Route("api/v1/orders/test/header")]
+        public async Task<HttpResponseMessage> TestAddHeader()
         {
-            var result = await _service.Test(model);
+            var result = await _service.TestAddHeader();
             if (result.Status != HttpStatusCode.OK)
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
 
-            return Request.CreateResponse(HttpStatusCode.OK, result.JsonData);
+            return Request.CreateResponse(HttpStatusCode.OK, result.Content);
         }
     }
 }

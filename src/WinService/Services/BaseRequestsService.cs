@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WinService.Configuration;
+using WinService.DataTransferObjects;
 using WinService.Models;
 
 namespace WinService.Services
@@ -47,7 +48,12 @@ namespace WinService.Services
                     if (request.Response.ErrorCode != 0)
                         return new HttpResponseModel(HttpStatusCode.InternalServerError, $"{request.Response.ErrorCode}: {request.Response.ErrorMessage}");
 
-                    return new HttpResponseModel(JsonConvert.SerializeObject(request.Response));
+                    var dto = new IdResponseDto
+                    {
+                        Id = request.Response.Id.Value
+                    };
+
+                    return new HttpResponseModel(dto);
                 }
                 catch (Exception ex)
                 {

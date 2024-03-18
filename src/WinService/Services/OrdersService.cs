@@ -13,14 +13,15 @@ using WinService.Database;
 using WinService.Interfaces;
 using QWMS.Models.Orders;
 using WinService.Models;
+using WinService.DataTransferObjects;
 
 namespace WinService.Services
 {
-#if !MOCKUP
+    #if !MOCKUP
 
     public class OrdersService : BaseRequestsService, IOrdersService
     {
-        public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
+        public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();        
 
         public async Task<List<OrderListModel>?> Get(string? search, int? page)
         {
@@ -51,11 +52,11 @@ namespace WinService.Services
             //return models;
         }
 
-        public async Task<HttpResponseModel> Test(OrderTestModel model)
-        {
-            return await ProcessRequest(model, Enums.RequestType.AddTestOrder);
-        }
+        public async Task<HttpResponseModel> TestAddHeader()
+        {            
+            return await ProcessRequest(null, Enums.RequestType.TestAddOrderHeader);
+        }        
     }
 
-#endif
+    #endif
 }
