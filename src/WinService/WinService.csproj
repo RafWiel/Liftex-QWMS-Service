@@ -126,6 +126,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="CdnDatabaseClient\OrdersCdnDatabaseClient.cs" />
     <Compile Include="CdnDatabaseClient\ProductsCdnDatabaseClient.cs" />
+    <Compile Include="DataTransferObjects\OrderDto.cs" />
     <Compile Include="DataTransferObjects\IdResponseDto.cs" />
     <Compile Include="Enums\RequestType.cs" />
     <Compile Include="Helpers\OverridenWebApiDependencyResolver.cs" />

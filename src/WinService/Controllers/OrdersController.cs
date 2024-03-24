@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using WinService.DataTransferObjects;
 using WinService.Interfaces;
 using WinService.Models;
 
@@ -43,6 +44,28 @@ namespace WinService.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
 
             return Request.CreateResponse(HttpStatusCode.OK, result.Content);
+        }
+
+        [HttpPost]
+        [Route("api/v1/orders/test/item")]
+        public async Task<HttpResponseMessage> TestAddItem(OrderDto dto)
+        {
+            var result = await _service.TestAddItem(dto);
+            if (result.Status != HttpStatusCode.OK)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        [Route("api/v1/orders/test/close")]
+        public async Task<HttpResponseMessage> TestClose(OrderDto dto)
+        {
+            var result = await _service.TestClose(dto);
+            if (result.Status != HttpStatusCode.OK)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

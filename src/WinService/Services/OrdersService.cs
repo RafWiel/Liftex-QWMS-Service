@@ -55,7 +55,17 @@ namespace WinService.Services
         public async Task<HttpResponseModel> TestAddHeader()
         {            
             return await ProcessRequest(null, Enums.RequestType.TestAddOrderHeader);
-        }        
+        }
+
+        public async Task<HttpResponseModel> TestAddItem(OrderDto dto)
+        {
+            return await ProcessRequest(dto, Enums.RequestType.TestAddOrderItem);
+        }
+
+        public async Task<HttpResponseModel> TestClose(OrderDto dto)
+        {
+            return await ProcessRequest(dto, Enums.RequestType.TestCloseOrder);
+        }
     }
 
     #endif

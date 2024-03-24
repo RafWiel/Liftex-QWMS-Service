@@ -30,7 +30,6 @@ namespace WinService.Services
             {
                 try
                 {
-
                     var request = new Models.CdnApiRequestModel
                     {
                         Id = Guid.NewGuid(),

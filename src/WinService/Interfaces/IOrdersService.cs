@@ -14,5 +14,7 @@ namespace WinService.Interfaces
     {
         Task<List<OrderListModel>?> Get(string? search, int? page);
         Task<HttpResponseModel> TestAddHeader();
+        Task<HttpResponseModel> TestAddItem(OrderDto dto);
+        Task<HttpResponseModel> TestClose(OrderDto dto);
     }
 }

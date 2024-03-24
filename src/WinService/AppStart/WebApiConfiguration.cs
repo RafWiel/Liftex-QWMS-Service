@@ -32,6 +32,18 @@ namespace WinService.AppStart
                 action = "TestAddHeader"
             })));
 
+            config.Routes.Add("TestAddOrderItem", new HttpRoute("api/v1/orders/test/item", new HttpRouteValueDictionary(new
+            {
+                controller = "Orders",
+                action = "TestAddItem"
+            })));
+
+            config.Routes.Add("TestCloseOrder", new HttpRoute("api/v1/orders/test/close", new HttpRouteValueDictionary(new
+            {
+                controller = "Orders",
+                action = "TestClose"
+            })));
+
             config.Routes.Add("Products", new HttpRoute("api/v1/products", new HttpRouteValueDictionary(new
             {
                 controller = "Products",

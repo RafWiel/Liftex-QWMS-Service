@@ -63,12 +63,36 @@ namespace WinService.Services
 
                 var dto = new IdResponseDto
                 {
-                    Id = 121
+                    Id = 101
                 };
 
                 return new HttpResponseModel(dto);
             });
-        }        
+        }
+
+        public async Task<HttpResponseModel> TestAddItem(OrderDto dto)
+        {
+            return await Task.Run(() => {
+                Thread.Sleep(1000);                
+
+                if (dto.Id != 101)
+                    return new HttpResponseModel(HttpStatusCode.NotFound, "Order not found");
+
+                return new HttpResponseModel(HttpStatusCode.OK);
+            });
+        }
+
+        public async Task<HttpResponseModel> TestClose(OrderDto dto)
+        {
+            return await Task.Run(() => {
+                Thread.Sleep(1000);
+
+                if (dto.Id != 101)
+                    return new HttpResponseModel(HttpStatusCode.NotFound, "Order not found");
+
+                return new HttpResponseModel(HttpStatusCode.OK);
+            });
+        }
     }
 
     #endif

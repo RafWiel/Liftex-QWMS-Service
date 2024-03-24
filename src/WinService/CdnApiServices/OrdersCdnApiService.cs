@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WinService.CdnApi;
 using WinService.Configuration;
 using WinService.Database;
+using WinService.DataTransferObjects;
 using WinService.Models;
 using WinService.Services;
 
@@ -19,7 +20,8 @@ namespace WinService.ApiServices
 
         public bool ProcessRequest(Models.CdnApiRequestModel request)
         {
-            if (request.Type != Enums.RequestType.TestAddOrderHeader)
+            if (request.Type < Enums.RequestType.FirstOrderRequest ||
+                request.Type > Enums.RequestType.LastOrderRequest)
                 return false;
 
             try
@@ -28,7 +30,13 @@ namespace WinService.ApiServices
                     Api.Login(ApiConfiguration.KeyServer, ApiConfiguration.DatabaseName, ApiConfiguration.User, ApiConfiguration.Password);
 
                 if (request.Type == Enums.RequestType.TestAddOrderHeader)
-                    TestAddOrderHeader(request);                
+                    TestAddOrderHeader(request);
+
+                if (request.Type == Enums.RequestType.TestAddOrderItem)
+                    TestAddOrderItem(request);
+
+                if (request.Type == Enums.RequestType.TestCloseOrder)
+                    TestCloseOrder(request);
             }
             catch (Exception ex)
             {
@@ -40,27 +48,7 @@ namespace WinService.ApiServices
             }
 
             return true;
-        }       
-
-        //private void AddTestOrder(Models.CdnApiRequestModel request)
-        //{
-        //    int documentId = 0;
-
-        //    using (var db = new CdnDatabaseClient(DatabaseConfiguration))
-        //    {
-        //        db.LogError += InvokeLogError;
-
-        //        bool result = AddTestHeader(request, db, ref documentId);
-        //        if (!result)
-        //            return;
-
-        //        result = AddTestItems(request, db, documentId);
-        //        if (!result)
-        //            return;
-        //    }
-
-        //    CloseTestOrder(request, documentId);
-        //}
+        }               
 
         private void TestAddOrderHeader(Models.CdnApiRequestModel request)
         {            
@@ -80,43 +68,49 @@ namespace WinService.ApiServices
             };
         }
 
-        //private bool AddTestItems(Models.CdnApiRequestModel request, CdnDatabaseClient database, int documentId)
-        //{
-        //    var errorMessage = string.Empty;
-                
-        //    var result = Api.AddTestOrderItem(documentId, ref errorMessage);
-        //    if (result != 0)
-        //    {
-        //        //anuluj dokument
-        //        Api.CloseTestOrder(true, ref documentId, ref errorMessage);
+        private bool TestAddOrderItem(Models.CdnApiRequestModel request)
+        {
+            var errorMessage = string.Empty;
 
-        //        SetErrorResponse(request, result, errorMessage);             
-        //    }
-            
-        //    //wystapil blad pozycji towaru
-        //    if (request.Response != null)
-        //        return false;
+            var dto = (OrderDto)request.WebRequest;
+            var id = dto.Id;
 
-        //    return true;
-        //}
+            var result = Api.AddTestOrderItem(id, ref errorMessage);
+            if (result != 0)
+            {
+                //anuluj dokument
+                Api.CloseTestOrder(true, ref id, ref errorMessage);
 
-        //private bool CloseTestOrder(Models.CdnApiRequestModel request, int documentId)
-        //{
-        //    var errorMessage = string.Empty;
+                SetErrorResponse(request, result, errorMessage);
+            }
 
-        //    var result = Api.CloseTestOrder(false, ref documentId, ref errorMessage);
-        //    if (result != 0)
-        //    {
-        //        SetErrorResponse(request, result, errorMessage);
-        //        return false;
-        //    }
+            //wystapil blad pozycji towaru
+            if (request.Response != null)
+                return false;
 
-        //    request.Response = new CdnApiResponseModel
-        //    {
-        //        Id = documentId
-        //    };
+            return true;
+        }
 
-        //    return true;
-        //}            
+        private bool TestCloseOrder(Models.CdnApiRequestModel request)
+        {
+            var errorMessage = string.Empty;
+
+            var dto = (OrderDto)request.WebRequest;
+            var id = dto.Id;
+
+            var result = Api.CloseTestOrder(false, ref id, ref errorMessage);
+            if (result != 0)
+            {
+                SetErrorResponse(request, result, errorMessage);
+                return false;
+            }
+
+            request.Response = new CdnApiResponseModel
+            {
+                Id = id
+            };
+
+            return true;
+        }
     }
 }
