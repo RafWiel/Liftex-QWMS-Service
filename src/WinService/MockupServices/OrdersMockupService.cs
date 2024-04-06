@@ -59,7 +59,7 @@ namespace WinService.Services
         public async Task<HttpResponseModel> TestAddHeader()
         {            
             return await Task.Run(() => {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 
                 var dto = new IdResponseDto
                 {
@@ -73,7 +73,7 @@ namespace WinService.Services
         public async Task<HttpResponseModel> TestAddItem(OrderDto dto)
         {
             return await Task.Run(() => {
-                Thread.Sleep(1000);                
+                Thread.Sleep(100);                
 
                 if (dto.Id != 101)
                     return new HttpResponseModel(HttpStatusCode.NotFound, "Order not found");
@@ -85,7 +85,7 @@ namespace WinService.Services
         public async Task<HttpResponseModel> TestClose(OrderDto dto)
         {
             return await Task.Run(() => {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
 
                 if (dto.Id != 101)
                     return new HttpResponseModel(HttpStatusCode.NotFound, "Order not found");
