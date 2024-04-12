@@ -17,7 +17,7 @@ namespace WinService.CdnApi
         public delegate void LogDelegate(string message);
         public event LogDelegate LogErrorEvent;
 
-        private const int ApiVersion = 20232;
+        private const int ApiVersion = 20240;
         private const int ResultException = 5001;
         private int _sessionId = 0;
         private CdnApiErrors _apiErrors = new CdnApiErrors();
@@ -192,7 +192,7 @@ namespace WinService.CdnApi
                 }
                 #endif  
 
-                var login = new XLLoginInfo_20232
+                var login = new XLLoginInfo_20240
                 {
                     Baza = dbName,
                     OpeIdent = user,
@@ -295,7 +295,7 @@ namespace WinService.CdnApi
         public static string GetErrorDescription(ErrorType method, int error)
         {
 
-            var info = new XLKomunikatInfo_20232
+            var info = new XLKomunikatInfo_20240
             {
                 Wersja = ApiVersion,
                 Funkcja = (int)method,

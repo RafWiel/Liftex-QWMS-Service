@@ -31,7 +31,7 @@ namespace WinService.CdnApi
                 var contractorCode = "K1";
                 var description = "Test QWMS";                
 #endif
-                var doc = new XLDokumentZamNagInfo_20232
+                var doc = new XLDokumentZamNagInfo_20240
                 {
                     Wersja = ApiVersion,
                     Tryb = 2, //wsadowy
@@ -77,7 +77,7 @@ namespace WinService.CdnApi
                 var code = "T1";                
 #endif
 
-                var doc = new XLDokumentZamElemInfo_20232
+                var doc = new XLDokumentZamElemInfo_20240
                 {
                     Wersja = ApiVersion,
                     Towar = code,
@@ -118,7 +118,7 @@ namespace WinService.CdnApi
 
                 bool saveToBuffer = true;// order.IsPayed == false;
 
-                var doc = new XLZamkniecieDokumentuZamInfo_20232
+                var doc = new XLZamkniecieDokumentuZamInfo_20240
                 {
                     Wersja = ApiVersion,
                     TrybZamkniecia = error ? delete : (saveToBuffer ? save : confirm)

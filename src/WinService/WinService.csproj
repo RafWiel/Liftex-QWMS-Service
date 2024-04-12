@@ -69,8 +69,8 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cdn_api20232.net">
-      <HintPath>..\..\..\..\_api\cdn_api20232.net.dll</HintPath>
+    <Reference Include="cdn_api20240.net">
+      <HintPath>..\..\packages\cdn_api20240.net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
