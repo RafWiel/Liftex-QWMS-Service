@@ -84,13 +84,18 @@ namespace WinService
         {
             _webApiService = new WebApiService
             (
+                _config.WebApi.Address,
                 _barcodesService,
                 _ordersService,
                 _productsService,
                 _reservationsService
-            );
+            );            
+            
+            _webApiService.LogEvent += LogEvent;
+            _webApiService.LogError += LogError;
 
             _webApiService.Start();
+
         }
 
         private void InitializeCdnApiService()
@@ -101,10 +106,11 @@ namespace WinService
                 ApiConfiguration = _config.Api,
             };
 
-            _cdnApiService.Start();
-
             _cdnApiService.LogEvent += LogEvent;
             _cdnApiService.LogError += LogError;
+
+            _cdnApiService.Start();
+
         }
 
         private void InitializeBarcodesService()
@@ -113,11 +119,11 @@ namespace WinService
             {
                 DatabaseConfiguration = _config.Database,
             };
-
-            _barcodesService.Start();
-
+           
             _barcodesService.LogEvent += LogEvent;
             _barcodesService.LogError += LogError;
+
+            _barcodesService.Start();
         }
 
         private void InitializeOrdersService()
@@ -126,12 +132,12 @@ namespace WinService
             {
                 DatabaseConfiguration = _config.Database,
                 Requests = _cdnApiService.Requests,
-            };
-
-            _ordersService.Start();
+            };            
 
             _ordersService.LogEvent += LogEvent;
             _ordersService.LogError += LogError;
+
+            _ordersService.Start();
         }
 
         private void InitializeProductsService()
@@ -140,12 +146,12 @@ namespace WinService
             {
                 DatabaseConfiguration = _config.Database,
                 PropertiesConfiguration = _config.Properties
-            };
-
-            _productsService.Start();
+            };            
 
             _productsService.LogEvent += LogEvent;
             _productsService.LogError += LogError;
+
+            _productsService.Start();
         }
 
         private void InitializeReservationsService()
@@ -154,12 +160,12 @@ namespace WinService
             {
                 DatabaseConfiguration = _config.Database,
                 PropertiesConfiguration = _config.Properties
-            };
-
-            _reservationsService.Start();
+            };            
 
             _reservationsService.LogEvent += LogEvent;
             _reservationsService.LogError += LogError;
+
+            _reservationsService.Start();
         }
 
         private void LogEvent(string message)

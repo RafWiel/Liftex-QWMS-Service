@@ -9,9 +9,7 @@ using System.Web.Http.SelfHost;
 namespace WinService.AppStart
 {
     public static class WebApiConfiguration
-    {
-        public const string Address = "http://localhost:3001";
-
+    {        
         public static void Register(HttpSelfHostConfiguration config)
         {
             config.Routes.Add("Barcodes", new HttpRoute("api/v1/barcodes", new HttpRouteValueDictionary(new

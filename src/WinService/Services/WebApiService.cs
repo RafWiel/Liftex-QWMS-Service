@@ -9,33 +9,39 @@ using WinService.Controllers;
 using WinService.Helpers;
 using WinService.AppStart;
 using WinService.Interfaces;
+using System.Reflection;
 
 namespace WinService.Services
 {
-    public class WebApiService : IBaseService
+    public class WebApiService : BaseService
     {       
         private HttpSelfHostServer _server;
+        private string _address;
 
         private IBarcodesService _barcodesService;
         private IOrdersService _ordersService;
         private IProductsService _productsService;
-        private IReservationsService _reservationsService;
+        private IReservationsService _reservationsService;        
 
         public WebApiService(
+            string address,
             IBarcodesService barcodesService,
             IOrdersService ordersService,
             IProductsService productsService,
             IReservationsService reservationsService)
         {
+            _address = address;
             _barcodesService = barcodesService;
             _ordersService = ordersService;
             _productsService = productsService;
             _reservationsService = reservationsService;
         }
         
-        public void Start()
+        public override void Start()
         {
-            var config = new HttpSelfHostConfiguration(WebApiConfiguration.Address);
+            InvokeLogEvent($"Uruchamianie web serwera - {_address}");
+
+            var config = new HttpSelfHostConfiguration(_address);
 
             config.DependencyResolver = new OverriddenWebApiDependencyResolver(config.DependencyResolver)
                 .Add(typeof(BarcodesController), () => new BarcodesController(_barcodesService))
@@ -46,10 +52,10 @@ namespace WinService.Services
             WebApiConfiguration.Register(config);
 
             _server = new HttpSelfHostServer(config);
-            _server.OpenAsync().Wait();
+            _server.OpenAsync().Wait();            
         }
 
-        public void Stop()
+        public override void Stop()
         {
             _server.CloseAsync();
         }       

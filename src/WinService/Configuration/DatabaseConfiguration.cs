@@ -11,10 +11,10 @@ namespace WinService.Configuration
     public class DatabaseConfiguration
     {
         [XmlElement]
-        public string Address { get; set; } = @"devds\SQLEXPRESS";
+        public string Address { get; set; } = "ThinkPad-X13\\SQLExpress";
 
         [XmlElement]
-        public string Name { get; set; } = "ERPXL_DEV";
+        public string Name { get; set; } = "ERPXL_DEV_OLD";
 
         [XmlIgnore]
         public string User { get; set; } = "sa";
@@ -33,7 +33,7 @@ namespace WinService.Configuration
         }
 
         [XmlIgnore]
-        public string Password { get; set; } = "sim";
+        public string Password { get; set; } = "Developer1!";
 
         [XmlElement(ElementName = "Password")]
         public string PasswordEncrypted

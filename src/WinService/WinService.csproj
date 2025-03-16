@@ -116,6 +116,7 @@
     <Compile Include="AppStart\WebApiConfiguration.cs" />
     <Compile Include="CdnDatabaseClient\ReservationsCdnDatabaseClient.cs" />
     <Compile Include="CdnDatabaseClient\BarcodesCdnDatabaseClient.cs" />
+    <Compile Include="Configuration\WebApiConfiguration.cs" />
     <Compile Include="Configuration\ApiConfiguration.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\DatabaseConfiguration.cs" />
@@ -179,7 +180,7 @@
     </None>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="_godziny.csv" />
+    <None Include="_hours.csv" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,13 +11,13 @@ namespace WinService.Configuration
     public class ApiConfiguration
     {
         [XmlElement]
-        public string KeyServer { get; set; } // = "localhost\\SQLEXPRESS::5000140418";
+        public string KeyServer { get; set; }  = "ThinkPad-X13\\SQLExpress::5000140418";
 
         [XmlElement]
-        public string DatabaseName { get; set; } // = "DEV";
+        public string DatabaseName { get; set; }  = "DEV_OLD";
 
         [XmlIgnore]
-        public string User { get; set; } // = "ADMIN";
+        public string User { get; set; }  = "ADMIN";
 
         [XmlElement(ElementName = "User")]
         public string UserEncrypted

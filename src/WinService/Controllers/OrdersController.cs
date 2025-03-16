@@ -65,7 +65,7 @@ namespace WinService.Controllers
             if (result.Status != HttpStatusCode.OK)
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, result.ErrorMessage);
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, result.Content);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace WinService.ApiServices
             };
         }
 
-        private bool TestAddOrderItem(Models.CdnApiRequestModel request)
+        private void TestAddOrderItem(Models.CdnApiRequestModel request)
         {
             var errorMessage = string.Empty;
 
@@ -86,12 +86,15 @@ namespace WinService.ApiServices
 
             //wystapil blad pozycji towaru
             if (request.Response != null)
-                return false;
+                return;
 
-            return true;
+            request.Response = new CdnApiResponseModel
+            {
+                Id = null
+            };
         }
 
-        private bool TestCloseOrder(Models.CdnApiRequestModel request)
+        private void TestCloseOrder(Models.CdnApiRequestModel request)
         {
             var errorMessage = string.Empty;
 
@@ -102,15 +105,13 @@ namespace WinService.ApiServices
             if (result != 0)
             {
                 SetErrorResponse(request, result, errorMessage);
-                return false;
+                return;
             }
 
             request.Response = new CdnApiResponseModel
             {
                 Id = id
             };
-
-            return true;
         }
     }
 }

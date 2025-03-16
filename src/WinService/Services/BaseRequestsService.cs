@@ -47,6 +47,9 @@ namespace WinService.Services
                     if (request.Response.ErrorCode != 0)
                         return new HttpResponseModel(HttpStatusCode.InternalServerError, $"{request.Response.ErrorCode}: {request.Response.ErrorMessage}");
 
+                    if (request.Response.Id == null)
+                        return new HttpResponseModel(HttpStatusCode.OK);
+
                     var dto = new IdResponseDto
                     {
                         Id = request.Response.Id.Value

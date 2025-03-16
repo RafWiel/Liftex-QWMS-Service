@@ -23,6 +23,9 @@ namespace WinService.Configuration
         [XmlElement(ElementName = "Properties")]
         public PropertiesConfiguration Properties { get; set; } = new PropertiesConfiguration();
 
+        [XmlElement]
+        public WebApiConfiguration WebApi { get; set; } = new WebApiConfiguration();
+
         #region File management       
 
         public static Configuration Load()
