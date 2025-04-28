@@ -9,15 +9,25 @@ namespace WinService.Configuration
 {
     public class PropertiesConfiguration
     {
+        #if DEBUG
+
+        [XmlElement]
+        public int WarehouseId { get; set; } = 1;
+
+        #else
+
+        [XmlElement]
+        public int WarehouseId { get; set; } = 11;
+
+        #endif
+
         [XmlElement]
         public string Operators { get; set; }
 
         [XmlElement]
         public string Warehouses { get; set; }
 
-        [XmlElement]
-        public int WarehouseId { get; set; } = 1;
-
+        
         [XmlElement]
         public string PmLackSeries { get; set; }
 

@@ -99,7 +99,7 @@ namespace WinService
         }
 
         private void InitializeCdnApiService()
-        {
+        {            
             _cdnApiService = new CdnApiService
             {
                 DatabaseConfiguration = _config.Database,

@@ -10,6 +10,8 @@ namespace WinService.Configuration
 {
     public class ApiConfiguration
     {
+        #if DEBUG
+        
         [XmlElement]
         public string KeyServer { get; set; }  = "ThinkPad-X13\\SQLExpress::5000140418";
 
@@ -18,6 +20,25 @@ namespace WinService.Configuration
 
         [XmlIgnore]
         public string User { get; set; }  = "ADMIN";
+
+        [XmlIgnore]
+        public string Password { get; set; }
+
+        #else
+
+        [XmlElement]
+        public string KeyServer { get; set; } = "W2K19-SQL\\ERP::5000150157";
+
+        [XmlElement]
+        public string DatabaseName { get; set; } = "ASMET";
+
+        [XmlIgnore]
+        public string User { get; set; } = "ADMIN";
+
+        [XmlIgnore]
+        public string Password { get; set; } = "*.k01K01";
+
+        #endif
 
         [XmlElement(ElementName = "User")]
         public string UserEncrypted
@@ -31,9 +52,6 @@ namespace WinService.Configuration
                 User = gEnc.Decrypt(value);
             }
         }
-
-        [XmlIgnore]
-        public string Password { get; set; }
 
         [XmlElement(ElementName = "Password")]
         public string PasswordEncrypted

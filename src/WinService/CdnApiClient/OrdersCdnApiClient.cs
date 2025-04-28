@@ -27,10 +27,9 @@ namespace WinService.CdnApi
 
             try
             {
-#if DEBUG
                 var contractorCode = "K1";
                 var description = "Test QWMS";                
-#endif
+
                 var doc = new XLDokumentZamNagInfo_20240
                 {
                     Wersja = ApiVersion,
@@ -73,9 +72,7 @@ namespace WinService.CdnApi
 
             try
             {
-#if DEBUG
                 var code = "T1";                
-#endif
 
                 var doc = new XLDokumentZamElemInfo_20240
                 {

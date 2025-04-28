@@ -10,7 +10,16 @@ namespace WinService.Configuration
 {
     public class WebApiConfiguration
     {
+        #if DEBUG
+        
         [XmlElement]
-        public string Address { get; set; }  = "http://ThinkPad-X13:3001";        
+        public string Address { get; set; }  = "http://ThinkPad-X13:3001";
+
+        #else
+
+        [XmlElement]
+        public string Address { get; set; } = "http://192.168.1.10:3001";
+        
+        #endif
     }
 }

@@ -16,25 +16,12 @@ namespace WinService.Database
 {
     public partial class CdnDatabaseClient : IDisposable
     {
-        #region Initialization
-
         public delegate void LogDelegate(string message);
         public event LogDelegate LogError;
 
         private SqlConnection _sqlConn;
         private StringBuilder _outputXml = new StringBuilder();
-
-        #region Enums
-
-        public enum ObjectType : int
-        {
-            Product = 16,
-            Contractor = 32,
-            ShippingAddress = 896
-        }
-
-        #endregion
-
+        
         public CdnDatabaseClient(DatabaseConfiguration config)
         {
             _sqlConn = new SqlConnection();
@@ -52,10 +39,6 @@ namespace WinService.Database
             }
         }
 
-        #endregion
-
-        #region Events
-
         void _sqlConn_InfoMessage(object sender, SqlInfoMessageEventArgs e)
         {
             try
@@ -71,10 +54,6 @@ namespace WinService.Database
                 LogError?.Invoke(ex.Message);
             }
         }
-
-        #endregion
-
-        #region Methods
 
         private void Connect(DatabaseConfiguration config)
         {
@@ -148,39 +127,6 @@ namespace WinService.Database
             }
 
             return 0;
-        }
-
-        public void ErrorLog_Insert(string errorMessage)
-        {
-            try
-            {
-                string commandText = @"                        
-                    insert into CDN.DS_Techsam_WebApi_ErrorLog 
-                    (
-                        Timestamp,
-                        ErrorMessage
-                    )
-                    values
-                    (
-                        @Timestamp,
-                        @ErrorMessage
-                    )
-                ";
-
-                using (var cmd = new SqlCommand(commandText, _sqlConn))
-                {
-                    cmd.Parameters.Add(new SqlParameter("@Timestamp", DateTime.Now));
-                    cmd.Parameters.Add(new SqlParameter("@ErrorMessage", errorMessage));
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                gLog.Write(ex.ToString());
-            }
-        }
-        
-        #endregion
+        }       
     }
 }

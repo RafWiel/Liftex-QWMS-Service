@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DataSoft")]
 [assembly: AssemblyProduct("WinService")]
-[assembly: AssemblyCopyright("Copyright © DataSoft 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("5f738cdb-8a66-4c03-92a8-59c0760be742")]
 
-[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyCopyright("Copyright © DataSoft 2025")]
+[assembly: AssemblyVersion("0.2.1.0")]
