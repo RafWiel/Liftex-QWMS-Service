@@ -24,6 +24,8 @@ namespace WinService.Services
 
         public async Task<List<ReservationListModel>?> Get(int productId, int? page)
         {
+            InvokeLogEvent($"Wysyłanie listy rezerwacji towaru id {productId}");
+
             try
             {
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))

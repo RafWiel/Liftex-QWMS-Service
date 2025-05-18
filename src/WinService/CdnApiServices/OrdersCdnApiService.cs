@@ -27,7 +27,10 @@ namespace WinService.ApiServices
             try
             {
                 if (Api.IsLoggedIn == false)
+                {
+                    InvokeLogEvent($"Logowanie API");
                     Api.Login(ApiConfiguration.KeyServer, ApiConfiguration.DatabaseName, ApiConfiguration.User, ApiConfiguration.Password);
+                }
 
                 if (request.Type == Enums.RequestType.TestAddOrderHeader)
                     TestAddOrderHeader(request);
@@ -55,7 +58,9 @@ namespace WinService.ApiServices
             var errorMessage = string.Empty;
             int documentId = 0;
 
-            int result = Api.AddTestOrder(ref documentId, ref errorMessage);
+            InvokeLogEvent($"Tworzenie nagłówka zamówienia. Kontrahent K1");
+
+            var result = Api.AddTestOrder(ref documentId, ref errorMessage);
             if (result != 0)
             {
                 SetErrorResponse(request, result, errorMessage);
@@ -75,9 +80,13 @@ namespace WinService.ApiServices
             var dto = (OrderDto)request.WebRequest;
             var id = dto.Id;
 
+            InvokeLogEvent($"Dodawanie towaru do zamówienia. Kod T1");
+
             var result = Api.AddTestOrderItem(id, ref errorMessage);
             if (result != 0)
             {
+                InvokeLogEvent($"Anulowanie zamówienia");
+
                 //anuluj dokument
                 Api.CloseTestOrder(true, ref id, ref errorMessage);
 
@@ -100,6 +109,8 @@ namespace WinService.ApiServices
 
             var dto = (OrderDto)request.WebRequest;
             var id = dto.Id;
+
+            InvokeLogEvent($"Zamykanie zamówienia");
 
             var result = Api.CloseTestOrder(false, ref id, ref errorMessage);
             if (result != 0)

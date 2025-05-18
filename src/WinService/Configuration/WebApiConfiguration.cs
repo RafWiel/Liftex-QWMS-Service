@@ -13,7 +13,7 @@ namespace WinService.Configuration
         #if DEBUG
         
         [XmlElement]
-        public string Address { get; set; }  = "http://ThinkPad-X13:3001";
+        public string Address { get; set; }  = "http://192.168.1.107:3001";
 
         #else
 

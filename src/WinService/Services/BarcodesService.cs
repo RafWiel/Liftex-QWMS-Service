@@ -25,6 +25,8 @@ namespace WinService.Services
         {
             try
             {
+                InvokeLogEvent($"Wysyłanie listy kodów kreskowych towaru id {productId}");
+
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))
                 {
                     db.LogError += InvokeLogError;

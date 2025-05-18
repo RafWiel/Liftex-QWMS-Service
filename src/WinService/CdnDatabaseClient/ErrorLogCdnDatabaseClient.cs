@@ -18,7 +18,7 @@ namespace WinService.Database
     {                  
         public void ErrorLog_Insert(string errorMessage)
         {
-            //uwaga
+            //UWAGA
             return;
 
             try

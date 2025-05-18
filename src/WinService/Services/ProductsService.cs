@@ -24,6 +24,8 @@ namespace WinService.Services
 
         public async Task<List<ProductListModel>?> Get(string? search, int? page)
         {
+            InvokeLogEvent($"Wysyłanie listy towarów");
+
             try
             {
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))
@@ -43,6 +45,8 @@ namespace WinService.Services
 
         public async Task<ProductDetailsModel?> GetSingle(int? id, string? ean)
         {
+            InvokeLogEvent($"Wysyłanie towaru id {id}");
+
             try
             {
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))

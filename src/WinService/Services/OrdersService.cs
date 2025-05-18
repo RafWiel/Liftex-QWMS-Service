@@ -27,6 +27,8 @@ namespace WinService.Services
         {
             try
             {
+                InvokeLogEvent($"Wysyłanie listy zamówień");
+
                 using (var db = new CdnDatabaseClient(DatabaseConfiguration))
                 {
                     db.LogError += InvokeLogError;
